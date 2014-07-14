@@ -9,15 +9,21 @@
 #include <iostream>
 #include <cstdio>
 #include "person.cpp"
+using namespace std;
 
 int main(int argc, const char * argv[]) {
-    person Varun("Varun", 'M', 23, "Sunnyvale", "De Anza College");
-    person Danny("Danny", 'M', 21, "Cupertino", "De Anza College");
-    person Martin("Martin", 'M', 19, "San Francisco", "San Francisco State");
-    Varun.addFriend(Danny);
-    Varun.addFriend(Martin);
+
+    person Varun("Varun", 'M', 23, "Sunnyvale", "De Anza");
+    person Ted("Ted", 'M', 20, "San Francisco", "Berkeley");
+    person Matt("Matt", 'M', 22, "Armenia", "Berkeley");
+    
+    
+    Varun.addFriend(Ted);
+    Varun.addStatus("What the fuck");
+    Varun.addStatus("This is bulshit");
+    Matt.addFriend(Varun);
     Varun.printFriends();
-    std::cout << std::endl;
-    Danny.printFriends();
+    Matt.printFriends();
+    
     return 0;
 }

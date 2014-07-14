@@ -1,4 +1,3 @@
-//
 //  person.cpp
 //  socialNetwork
 //
@@ -10,75 +9,142 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
+#include <iomanip>
+#include <map>
 
+using namespace std;
 
 class person {
 private:
-    std::string name;
+    string name;
     char gender;
     int age;
-    std::string city;
-    std::string college;
-    std::vector<person> status;
-    std::vector<person> friends;
-    std::vector<person> messages;
-
-
-    
-    //wall status
-    //vector of person (for friends)
-    //string Vector :  Message Array (just thought of this.. so a user can send a message    to another user, so when we add /// another person object.. it will add this object in their    friends array as  well.
-    
+     string city;
+     string college;
+     vector<person> friends;
+     vector< string> status;
+     vector< string> messages;
 public:
-    person(std::string name, char gender, int age, std::string city, std::string college){
-        this->name = name;
-        this->age = age;
-        this->city = city;
-        this->college = college;
-    }
-    void setName(std::string item) {
-        this->name = name;
-    }
-    void setGender(char gender) {
-        this->gender = gender;
-    }
-    void setAge(int age) {
-        this->age = age;
-    }
-    void addCity(int city) {
-        this->city = city;
-    }
-    void addCollege(std::string college) {
-        this->college = college;
-    }
-    void addFriend(person &friendName) {
-        // NOTE : check if already exists
-        friends.push_back(friendName);
-        friendName.friends.push_back(*this);
-    }
-    std::string getName() const {
-        return name;
-    }
-    char getGender() const {
-        return gender;
-    }
-    int getAge() const {
-        return age;
-    }
-    std::string getCity() const {
-        return city;
-    }
-    std::string getCollege() const {
-        return college;
-    }
+  
+ person ( string name, char gender, int age,  string city,  string college){
+    this->name = name;
+    this->age = age;
+    this->city = city;
+    this->college = college;
+};
 
-    void printFriends() const {
-        std::cout << "Friends of " << name << std::endl;
-        for (int i=0; i<friends.size();i++){
-            std::cout << friends[i].name << std::endl;
+void setName( string item) {
+    this->name = name;
+}
+void  setGender(char gender) {
+    this->gender = gender;
+}
+void  setAge(int age) {
+    this->age = age;
+}
+void  addCity(int city) {
+    this->city = city;
+}
+void  addCollege( string college) {
+    this->college = college;
+}
+
+void  addStatus( string newStatus) {
+    time_t _tm =time(NULL );
+    struct tm * curtime = localtime ( &_tm );
+     string timeNow  = asctime(curtime)+newStatus;
+    
+    status.push_back(timeNow + "\n");
+}
+
+
+void  receiveMessage( string message) {
+    messages.push_back(message);
+}
+
+
+void  sendMessage(person &friendName,  string message) {
+    time_t _tm =time(NULL );
+    struct tm * curtime = localtime ( &_tm );
+     string timeNow  = asctime(curtime);
+     string messageName = this->name + "\n" + message;
+    friendName.receiveMessage(timeNow+messageName+ " \n");
+}
+void  addFriend(person &friendName) {
+    // NOTE : check if already exists or if it is the same person
+    
+    if (&friendName == this)
+    {
+         cout << "You cannot add yourself." <<  endl;
+        return;
+    }
+    for (int i = 0; i < friends.size(); i++ ) {
+        if (friends[i].name == friendName.name) {
+             cout << "You cannot add the same friend twice." <<  endl;
+            return  ;
         }
+    }
+    friends.push_back(friendName);
+    friendName.friends.push_back(*this);
+     cout << name << " and " << friendName.name << " are now friend " <<  endl;
+}
+ string getName() const {
+    return name;
+}
+char  getGender() const {
+    return gender;
+}
+int  getAge() const {
+    return age;
+}
+ string  getCity() const {
+    return city;
+}
+ string  getCollege() const {
+    return college;
+}
 
-    };
+void  printFriends() const {
+    if( friends.size() == 0 ) {
+         cout << name << " has no friends." <<  endl;
+    }
+    else
+    {
+         cout << "Friends of " << name <<  endl;
+        for (int i=0; i<friends.size();i++){
+             cout << friends[i].name <<  endl;
+        }
+    }
+    
 };
 
 
+void  printStatus() const {
+    if( status.size() == 0 ) {
+         cout << name << " has no status dpdates." <<  endl;
+    }
+    else
+    {
+         cout << "Status updates of " << name <<  endl;
+        for (int i=0; i<status.size();i++){
+             cout << status[i] <<  endl;
+        }
+    }
+    
+};
+
+void  printMessages() {
+    if( messages.size() == 0 ) {
+         cout << name << " no messages so far." <<  endl;
+    }
+    else
+    {
+         cout << "Private Messages of " << name <<  endl;
+        for (int i=0; i<messages.size();i++){
+             cout << messages[i] <<  endl;
+        }
+    }
+};
+
+};

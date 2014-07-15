@@ -18,6 +18,7 @@ using namespace std;
 class person {
 private:
     string name;
+    string password;
     char gender;
     int age;
      string city;
@@ -27,8 +28,9 @@ private:
      vector< string> messages;
 public:
   
- person ( string name, char gender, int age,  string city,  string college){
+ person ( string name, string password, char gender, int age,  string city,  string college){
     this->name = name;
+    this->password = password;
     this->age = age;
     this->city = city;
     this->college = college;
@@ -51,10 +53,7 @@ void  addCollege( string college) {
 }
 
 void  addStatus( string newStatus) {
-    time_t _tm =time(NULL );
-    struct tm * curtime = localtime ( &_tm );
-     string timeNow  = asctime(curtime)+newStatus;
-    
+    string timeNow  = getDate()+newStatus;
     status.push_back(timeNow + "\n");
 }
 
@@ -65,11 +64,8 @@ void  receiveMessage( string message) {
 
 
 void  sendMessage(person &friendName,  string message) {
-    time_t _tm =time(NULL );
-    struct tm * curtime = localtime ( &_tm );
-     string timeNow  = asctime(curtime);
-     string messageName = this->name + "\n" + message;
-    friendName.receiveMessage(timeNow+messageName+ " \n");
+      string messageName = this->name + "\n" + message;
+      friendName.receiveMessage(getDate() +messageName+ " \n");
 }
 void  addFriend(person &friendName) {
     // NOTE : check if already exists or if it is the same person
@@ -92,11 +88,16 @@ void  addFriend(person &friendName) {
  string getName() const {
     return name;
 }
+    string getPassword() const {
+        return password;
+    }
+
 char  getGender() const {
     return gender;
 }
 int  getAge() const {
     return age;
+    
 }
  string  getCity() const {
     return city;
@@ -126,7 +127,7 @@ void  printStatus() const {
     }
     else
     {
-         cout << "Status updates of " << name <<  endl;
+        cout << "Status updates of " << name <<  endl << "----------------------------------------------" << endl;
         for (int i=0; i<status.size();i++){
              cout << status[i] <<  endl;
         }
@@ -140,11 +141,25 @@ void  printMessages() {
     }
     else
     {
-         cout << "Private Messages of " << name <<  endl;
+        cout << "Private Messages of " << name  <<  endl << "----------------------------------------------" << endl;
         for (int i=0; i<messages.size();i++){
              cout << messages[i] <<  endl;
         }
     }
 };
+    
+    string getDate() {
+        time_t theTime = time(NULL);
+        struct tm *aTime = localtime(&theTime);
+        
+        int day = aTime->tm_mday;
+        int month = aTime->tm_mon ; // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
+        int year = aTime->tm_year + 1900; // Year is # years since 1900
+        string months[] = {"January", "February", "March", "April",
+            "May", "June", "July", "August", "September", "October",
+            "November", "December"};
+        string fullDate = to_string(day)+ " " + months[month] +" " +to_string(year) + "\n";
+        return fullDate;
+    }
 
 };

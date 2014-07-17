@@ -1,16 +1,19 @@
 Varun 
+va@22
 M 
 23
 Sunnyvale
 De Anza College
 
-Danny 
+Danny
+da@22
 M
 21
 Cupertino
 De Anza College
 
-Elise  
+Elise
+el@22
 F
 22
 New York

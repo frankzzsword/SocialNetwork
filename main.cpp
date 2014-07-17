@@ -8,22 +8,36 @@
 
 #include <iostream>
 #include <cstdio>
-#include "person.cpp"
+#include "inputoutput.cpp"
 using namespace std;
 
 int main(int argc, const char * argv[]) {
 
-    person Varun("Varun", 'M', 23, "Sunnyvale", "De Anza");
-    person Ted("Ted", 'M', 20, "San Francisco", "Berkeley");
-    person Matt("Matt", 'M', 22, "Armenia", "Berkeley");
+    
+    inputoutput menu;
+
+    person Varun("Varun", "me" ,'M', 23, "Sunnyvale", "De Anza");
+    person Ted("Ted","you", 'M', 20, "San Francisco", "Berkeley");
+    person Matt("Matt","them", 'M', 22, "Armenia", "Berkeley");
+    person Danny("Danny" , "no", 'M', 22, "Armenia", "Berkeley");
+    
+    person personArray[] = {Varun, Ted, Matt};
+    int input = 0;
+    
+    while(input != 2) {
+        string name;
+        string password;
+        cout << "Username: ";
+        cin>>name;
+        cout << "Password: ";
+        cin>>password;
+        
+        if(name != "admin")
+            menu.userMenu(personArray, name, password);
+        else
+            cout << "admin menu" << endl;
+        }
     
     
-    Varun.addFriend(Ted);
-    Varun.addStatus("What the fuck");
-    Varun.addStatus("This is bulshit");
-    Matt.addFriend(Varun);
-    Varun.printFriends();
-    Matt.printFriends();
     
-    return 0;
 }

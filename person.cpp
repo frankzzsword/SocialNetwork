@@ -5,13 +5,14 @@
 //  Copyright (c) 2014 Varun Mishra. All rights reserved.
 //
 
-#include <stdio.h>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <ctime>
 #include <iomanip>
+#include <stdio.h>
 #include <map>
+
 
 using namespace std;
 
@@ -25,7 +26,9 @@ private:
      string college;
      vector<person> friends;
      vector< string> status;
-     vector< string> messages;
+//   vector< string> messages;
+     map<string, vector<string>> text;
+
 public:
   
  person ( string name, string password, char gender, int age,  string city,  string college){
@@ -58,15 +61,31 @@ void  addStatus( string newStatus) {
 }
 
 
-void  receiveMessage( string message) {
-    messages.push_back(message);
-}
+//void  receiveMessage( string message) {
+//    messages.push_back(message);
+//}
 
 
+//void  sendMessage(person &friendName,  string message) {
+//      string messageName = this->name + "\n" + message;
+//      friendName.receiveMessage(getDate() +messageName+ " \n");
+//}
+
+void  receiveMessage(person&friendName ,string message) {
+    friendName.text[this->name].push_back(message);
+};
+    
+    
 void  sendMessage(person &friendName,  string message) {
-      string messageName = this->name + "\n" + message;
-      friendName.receiveMessage(getDate() +messageName+ " \n");
-}
+    string messageName = this->name + "  " + getDate() + message + "\n";
+    string firstName = friendName.getName();
+    text[firstName].push_back(messageName);
+    friendName.receiveMessage(friendName, messageName);
+};
+    
+    
+    
+    
 void  addFriend(person &friendName) {
     // NOTE : check if already exists or if it is the same person
     
@@ -135,18 +154,27 @@ void  printStatus() const {
     
 };
 
-void  printMessages() {
-    if( messages.size() == 0 ) {
+void  printMessages() const {
+    if( text.size() == 0 ) {
          cout << name << " no messages so far." <<  endl;
     }
     else
     {
         cout << "Private Messages of " << name  <<  endl << "----------------------------------------------" << endl;
-        for (int i=0; i<messages.size();i++){
-             cout << messages[i] <<  endl;
+        for(auto mapIt = begin(text); mapIt != end(text); ++mapIt)
+        {
+            std::cout << mapIt->first << " : ";
+            
+            for(auto c : mapIt->second)
+            {
+                std::cout << c << " ";
+            }
+            
+            std::cout << std::endl;
         }
-    }
-};
+       }
+                }
+
     
     string getDate() {
         time_t theTime = time(NULL);

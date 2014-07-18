@@ -1,39 +1,23 @@
 #include <iostream>
+
 using namespace std;
 
+class BinarySearchTree
+{
+private:
+	struct node
+	{
+		int data;
+		node* left;
+		node* right;          
+	};
+	node* root;
 
-struct BSTNode{
-	int data;
-	BSTNode* left;
-	BSTNode* right;
+public:
+	BinarySearchTree() {root = NULL;}
+	bool isEmpty() const {return root == NULL;} //checks if BST is empty
+	void insert(int); //insert an item into the BST
+	void remove(int); //removes an item from the BST
+	void inOrder(node*); //calculates the in-order traversal
+	void print_inOrder(); //prints the in-order traversal
 };
-
-/**********************************************************GetNewNode****************************************************/
-BSTNode* GetNewNode(int data){
-	BSTNode* newNode = new BSTNode();
-	newNode->data = data;
-	newNode->left = newNode->right = NULL;
-	return newNode;
-}
-
-/**********************************************************Insert*******************************************************/
-BSTNode* Insert(BSTNode* root, int data){
-if(root == NULL) {
-	root = GetNewNode(data);
-}
-else if(data <= root->data){
-	root->left = Insert (root->left,data);
-}
-else {
-	root->right = Insert(root->right,data);
-}
-return root;
-}
-
-/**********************************************************Search*******************************************************/
-bool Search(BSTNode* root, int data){
-	if(root == NULL) return false;
-	else if(root->data == data) return true;
-	else if(data <= root->data) return Search(root->left,data);
-	else return Search(root->right, data);
-}

@@ -114,8 +114,8 @@ void hashing::PrintTable()
 			cout << "Index = " << i <<endl;
 			cout << "There are " << number << " people in this bucket.\n";
 			item* Ptr = HashTable[i];
-			//while( Ptr->next != 0)
-			
+			while( Ptr != 0)
+			{
 				cout << Ptr->hashedPerson.getName() << endl;
 				cout << Ptr->hashedPerson.getGender() << endl;
 				cout << Ptr->hashedPerson.getAge() << endl;
@@ -124,7 +124,7 @@ void hashing::PrintTable()
 				cout << "--------------------------\n";
 				Ptr = Ptr->next;
 			
-			
+			}
 		 }
 
 	}

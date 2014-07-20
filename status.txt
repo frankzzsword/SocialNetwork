@@ -4,7 +4,7 @@ Header file for all 3 files (PERSON, BST, HASH) is available. Andrew can you upl
  
 
 TO BE DONE:
-
+person.cpp needs a constructor
 
 
 

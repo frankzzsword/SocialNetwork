@@ -7,6 +7,15 @@
 #include "person.h"
 
 using namespace std;
+person::person ( )
+   name = " ";
+   password = " ";
+   age = 0;
+   city = " ";
+   college = " ";
+};
+
+
 
 person::person ( string name, string password, char gender, int age,  string city,  string college){
     this->name = name;

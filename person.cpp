@@ -4,34 +4,11 @@
 //  Created by Varun Mishra on 7/10/14.
 //  Copyright (c) 2014 Varun Mishra. All rights reserved.
 //
-
-#include <iostream>
-#include <string>
-#include <vector>
-#include <ctime>
-#include <iomanip>
-#include <stdio.h>
-#include <map>
-
+#include "person.h"
 
 using namespace std;
 
-class person {
-private:
-    string name;
-    string password;
-    char gender;
-    int age;
-     string city;
-     string college;
-     vector<person> friends;
-     vector< string> status;
-//   vector< string> messages;
-     map<string, vector<string>> text;
-
-public:
-  
- person ( string name, string password, char gender, int age,  string city,  string college){
+person::person ( string name, string password, char gender, int age,  string city,  string college){
     this->name = name;
     this->password = password;
     this->age = age;
@@ -39,23 +16,23 @@ public:
     this->college = college;
 };
 
-void setName( string item) {
+void person::setName( string item) {
     this->name = name;
 }
-void  setGender(char gender) {
+void  person::setGender(char gender) {
     this->gender = gender;
 }
-void  setAge(int age) {
+void  person::setAge(int age) {
     this->age = age;
 }
-void  addCity(int city) {
+void  person::setCity(int city) {
     this->city = city;
 }
-void  addCollege( string college) {
+void  person::setCollege( string college) {
     this->college = college;
 }
 
-void  addStatus( string newStatus) {
+void  person::setStatus( string newStatus) {
     string timeNow  = getDate()+newStatus;
     status.push_back(timeNow + "\n");
 }
@@ -71,12 +48,12 @@ void  addStatus( string newStatus) {
 //      friendName.receiveMessage(getDate() +messageName+ " \n");
 //}
 
-void  receiveMessage(person&friendName ,string message) {
+void  person::receiveMessage(person&friendName ,string message) {
     friendName.text[this->name].push_back(message);
 };
     
     
-void  sendMessage(person &friendName,  string message) {
+void  person::sendMessage(person &friendName,  string message) {
     string messageName = this->name + "  " + getDate() + message + "\n";
     string firstName = friendName.getName();
     text[firstName].push_back(messageName);
@@ -86,7 +63,7 @@ void  sendMessage(person &friendName,  string message) {
     
     
     
-void  addFriend(person &friendName) {
+void  person::setFriend(person &friendName) {
     // NOTE : check if already exists or if it is the same person
     
     if (&friendName == this)
@@ -104,28 +81,28 @@ void  addFriend(person &friendName) {
     friendName.friends.push_back(*this);
      cout << name << " and " << friendName.name << " are now friend " <<  endl;
 }
- string getName() const {
+ string person::getName() const {
     return name;
 }
-    string getPassword() const {
+    string person::getPassword() const {
         return password;
     }
 
-char  getGender() const {
+char  person::getGender() const {
     return gender;
 }
-int  getAge() const {
+int  person::getAge() const {
     return age;
     
 }
- string  getCity() const {
+ string person:: getCity() const {
     return city;
 }
- string  getCollege() const {
+ string  person::getCollege() const {
     return college;
 }
 
-void  printFriends() const {
+void  person::printFriends() const {
     if( friends.size() == 0 ) {
          cout << name << " has no friends." <<  endl;
     }
@@ -140,7 +117,7 @@ void  printFriends() const {
 };
 
 
-void  printStatus() const {
+void  person::printStatus() const {
     if( status.size() == 0 ) {
          cout << name << " has no status dpdates." <<  endl;
     }
@@ -154,29 +131,29 @@ void  printStatus() const {
     
 };
 
-void  printMessages() const {
+void person:: printMessages() const {
     if( text.size() == 0 ) {
          cout << name << " no messages so far." <<  endl;
     }
     else
     {
         cout << "Private Messages of " << name  <<  endl << "----------------------------------------------" << endl;
-        for(auto mapIt = begin(text); mapIt != end(text); ++mapIt)
-        {
-            std::cout << mapIt->first << " : ";
-            
-            for(auto c : mapIt->second)
-            {
-                std::cout << c << " ";
-            }
-            
-            std::cout << std::endl;
-        }
+//        for(auto mapIt = begin(text); mapIt != end(text); ++mapIt)
+//        {
+//            std::cout << mapIt->first << " : ";
+//            
+//            for(auto c : mapIt->second)
+//            {
+//                std::cout << c << " ";
+//            }
+//            
+//            std::cout << std::endl;
+//        }
        }
                 }
 
     
-    string getDate() {
+    string person::getDate() {
         time_t theTime = time(NULL);
         struct tm *aTime = localtime(&theTime);
         
@@ -189,5 +166,3 @@ void  printMessages() const {
         string fullDate = to_string(day)+ " " + months[month] +" " +to_string(year) + "\n";
         return fullDate;
     }
-
-};

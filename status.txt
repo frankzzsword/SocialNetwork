@@ -1,14 +1,15 @@
 DONE:
 Varun:
 Header file for all 3 files (PERSON, BST, HASH) is available. Andrew can you upload it before tomorrow?
- 
+person.cpp needs a constructor ( DONE )
+
 
 TO BE DONE:
-person.cpp needs a constructor
+Varun: put overloaded operators to be used for binary search tree. If we use BST templates, we will need an 
+overloaded operator (< and > or == for name ) in person class to compare the objects. I will do that, but will need
+to work with Andrew and Boya on this. 
 
-
-
-
+Are you guys available tomorrow before the class or after the class?
 
 
 OTHER IDEAS:

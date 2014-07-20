@@ -1,11 +1,7 @@
 DONE:
 Varun:
-dfdsffds
-
-
-
-
-
+Header file for all 3 files (PERSON, BST, HASH) is available. Andrew can you upload it before tomorrow?
+ 
 
 TO BE DONE:
 

@@ -9,8 +9,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <cstdio>
-#include "person.cpp"
-
+#include "person.h"
 using namespace std;
 
 class inputoutput {
@@ -33,15 +32,19 @@ void userMenu(person personArray[], string name, string password) {
                     string friendName;
                     string message;
                     string pressKey;
+                    bool friendFound = false;
                     string status = " ";
                     cin >> option;
                     switch(option) {
                         case 1 : cout << "Which friend would you like to add" << endl;
                             cin >> friendName;
                             for(int d = 0; d < 3; d++) {
-                                if (friendName == personArray[d].getName())
+                                if (friendName == personArray[d].getName()) {
                                     personArray[i].addFriend(personArray[d]);
-                            }
+                                friendFound = true;
+                                }
+                                    }
+                            if(friendFound == false) cout << "Person does not exist in the database";
                             break;
                             
                         case 2 : cout << "What's on your mind?" << endl;
@@ -50,6 +53,7 @@ void userMenu(person personArray[], string name, string password) {
                             cout << " " << endl;
                             personArray[i].addStatus(status);
                             break;
+                            
                         case 3 :
                             cout << "Which friend would you like to send a message" << endl;
                             cin.ignore();
@@ -58,7 +62,8 @@ void userMenu(person personArray[], string name, string password) {
                             getline(cin, message);
                             for(int d = 0; d < 3; d++) {
                                 if (friendName == personArray[d].getName())
-                                    personArray[i].sendMessage(personArray[d], message);
+                            personArray[i].sendMessage(personArray[d], message);
+                                
                             }
                             break;
                         case 4 :

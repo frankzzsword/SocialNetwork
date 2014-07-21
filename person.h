@@ -37,9 +37,10 @@ public:
     person ( string name, string password, char gender, int age,  string city,  string college);
     //SETTER METHODS
     void setName( string item);
+    void setPassword(string password);
     void  setGender(char gender);
     void  setAge(int age);
-    void  setCity(int city);
+    void  setCity(string city);
     void  setCollege( string college);
     void  setStatus( string newStatus);
     void  setFriend(person &friendName);
@@ -60,6 +61,21 @@ public:
     void  printStatus() const;
     void  printMessages() const;
     
+    
+    //Overloaded Functions for Binary Search Tree
+    bool operator < (const person &otherObject)
+    {
+        return name > otherObject.getName();
+    }
+      bool operator > (const person &otherObject)
+    {
+        return name > otherObject.getName();
+    }
+    
+    bool operator == (const person &otherObject) {
+        
+            return name == otherObject.getName();
+    }
 };
 
 #endif

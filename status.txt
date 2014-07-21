@@ -1,3 +1,8 @@
+// GITHUB HAS A ISSUE SYSTEM, where we can post issues regarding specific files or post questions
+Lets use that instead since its easier to track what's going on and what problems we're facing.
+
+
+
 DONE:
 Varun:
 Header file for all 3 files (PERSON, BST, HASH) is available. Andrew can you upload it before tomorrow?

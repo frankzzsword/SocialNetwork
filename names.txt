@@ -1,20 +1,83 @@
-Varun 
-va@22
-M 
+Varun Mishra
+testme
+Male 
 23
-Sunnyvale
+Sunnyvale, California
 De Anza College
 
-Danny
-da@22
-M
+Danny Yao
+ynnad
+Male
 21
-Cupertino
+Cupertino, California
 De Anza College
 
 Elise
-el@22
-F
+esile
+Female
 22
-New York
+New York, New York
 NY State University
+
+John Corner
+nhojrenroc
+Male
+18
+Arlington, Texas
+Texas Instruments
+
+Magaret Lisi
+teragam
+Female
+20
+New York, NY
+University of Buffalo
+
+Tiffani Sahr
+inaffit
+Female
+28
+Los Angeles, CA
+UCLA
+
+Cherish Barns
+hsirehc
+Male
+34
+Chicago, IL
+Chiago Business School
+
+Edda Labrecque
+ahhe
+Female
+21
+Asutin, TX
+University of Texas, Austin
+
+Heidi Lozier
+idieh
+Female
+23
+Phoenix, AZ
+Ariona State University
+
+Chang Heintzelman
+hank
+Female
+17
+Philadelphia, PA
+Drexel Univerisity
+
+Chan Riser
+nahc
+Male
+29
+San Antonio, TX
+University of Texas, San Antonio
+
+Darryl Zehner
+lyrrad
+Male
+20
+San Diego, CA
+San Diego State University

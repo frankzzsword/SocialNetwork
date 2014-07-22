@@ -10,7 +10,7 @@ In BST  (Varun, Andrew and Danny)
   - Make a Destructor for BST 
   
   
-In Hash ( Varun and Boya)
+In Hash (Boya)
   - Choose a prime Number for tableSize
   - Put the statistics out (Number of Collision, Largest Collision Chain, Load Factor, Number of elements)
   - Search function

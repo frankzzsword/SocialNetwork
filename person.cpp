@@ -5,30 +5,40 @@
 //  Copyright (c) 2014 Varun Mishra. All rights reserved.
 //
 #include "person.h"
+#include <string>
+#include <sstream>
+#include <algorithm>
+
+
 
 using namespace std;
 
 // default constructor
 person::person ( ) {
-name = " ";
-password = " ";
-age = 0;
-city = " ";
-college = " ";
+    name = " ";
+    password = " ";
+    gender = " ";
+    age = 0;
+    city = " ";
+    college = " ";
 };
 
 // setter constructor
-person::person ( string name, string password, char gender, int age,  string city,  string college){
+person::person ( string name, string password, string gender, int age,  string city,  string college){
     this->name = name;
     this->password = password;
+    this->gender = gender;
     this->age = age;
     this->city = city;
     this->college = college;
 };
-void person::setName( string item) {
+void person::setName( string name) {
     this->name = name;
 }
-void  person::setGender(char gender) {
+void person::setPassword( string password) {
+    this->password = password;
+}
+void  person::setGender(string gender) {
     this->gender = gender;
 }
 void  person::setAge(int age) {
@@ -94,10 +104,20 @@ string person::getName() const {
     return name;
 }
 string person::getPassword() const {
-    return password;
+    int a = (int)password.length();
+    
+    string newPassword;
+    for (int i = 0; i < a; i++) {
+        newPassword += "*";
+    }
+    return newPassword;
 }
 
-char  person::getGender() const {
+string person::getPwd() const {
+        return password;
+}
+
+string  person::getGender() const {
     return gender;
 }
 int  person::getAge() const {
@@ -147,17 +167,14 @@ void person:: printMessages() const {
     else
     {
         cout << "Private Messages of " << name  <<  endl << "----------------------------------------------" << endl;
-                for(auto mapIt = begin(text); mapIt != end(text); ++mapIt)
-                {
-                    std::cout << mapIt->first << " : ";
-        
-                    for(auto c : mapIt->second)
-                    {
-                        std::cout << c << " ";
-                    }
-        
-                    std::cout << std::endl;
-                }
+        typedef map<string, vector<string>>::const_iterator MapIterator;
+        for (MapIterator iter = text.begin(); iter != text.end(); iter++)
+        {
+            cout << "Key: " << iter->first << endl << "Values:" << endl;
+            typedef vector<string>::const_iterator ListIterator;
+            for (ListIterator list_iter = iter->second.begin(); list_iter != iter->second.end(); list_iter++)
+                cout << " " << *list_iter << endl;
+        }
     }
 }
 
@@ -172,6 +189,18 @@ string person::getDate() {
     string months[] = {"January", "February", "March", "April",
         "May", "June", "July", "August", "September", "October",
         "November", "December"};
-    string fullDate = to_string(day)+ " " + months[month] +" " +to_string(year) + "\n";
+    string DAY;
+    {
+        stringstream ss;
+        ss << day;
+        DAY = ss.str();
+    }
+    string YEAR;
+    {
+        stringstream ss;
+        ss << year;
+        YEAR = ss.str();
+    }
+    string fullDate = DAY+ " " + months[month] +" " + YEAR + "\n";
     return fullDate;
 }

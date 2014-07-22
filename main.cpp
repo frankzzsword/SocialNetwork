@@ -8,32 +8,53 @@
 
 #include <iostream>
 #include <cstdio>
+#include "person.h"
 #include "inputoutput.cpp"
+#include "hashing.h"
+#include "BinarySearchTree.h"
+#include "BinarySearchTree.cpp"
+
+
 using namespace std;
 
 int main(int argc, const char * argv[]) {
 
     
+    /*
+     create object of inputout.
+     */
     inputoutput menu;
-
-    person Varun("Varun", "me" ,'M', 23, "Sunnyvale", "De Anza");
-    person Ted("Ted","you", 'M', 20, "San Francisco", "Berkeley");
-    person Matt("Matt","them", 'M', 22, "Armenia", "Berkeley");
-    person Danny("Danny" , "no", 'M', 22, "Armenia", "Berkeley");
+    hashing hashfunc;
     
-    person personArray[] = {Varun, Ted, Matt};
+    menu.readFile("names.txt");
+    
+    for(int i = 0; i < 10; i++) {
+        hashfunc.addObject(menu.personArray[i]);
+    }
+    
+    hashfunc.PrintTable();
+  
+        BinarySearchTree<person> tree;
+        for(int i = 0; i < 12; i++) {
+            tree.insert(menu.personArray[i]);
+        }
+    
+        cout << " Binary Tree " << endl;
+    tree.print_inOrder();
+    
+    
+    
     int input = 0;
-    
     while(input != 2) {
         string name;
         string password;
         cout << "Username: ";
-        cin>>name;
+        getline(cin, name);
         cout << "Password: ";
         cin>>password;
         
         if(name != "admin")
-            menu.userMenu(personArray, name, password);
+            menu.userMenu(menu.personArray, name, password);
         else
             cout << "admin menu" << endl;
         }

@@ -8,14 +8,64 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <iomanip>
 #include <cstdio>
 #include "person.h"
+#include <cstdlib>
+#include <fstream>
+#include <string>
+#include <sstream>
+#include <vector>
 using namespace std;
 
 class inputoutput {
 
 public:
-void userMenu(person personArray[], string name, string password) {
+    vector<person> personArray;
+int count;
+
+    inputoutput() {
+        count = 0;
+    }
+void readFile(string textname)  //dynamically allocate memory and storing each product line into the dynamic memory array
+    {
+            string  name;
+            string password;
+            string gender;
+            string age;
+            string city;
+            string college;
+            string wasteSpace;
+        
+        
+            ifstream infile;
+            infile.open(textname);
+            while(!infile.eof())
+            {
+                getline(infile, name);
+                getline(infile, password);
+                getline(infile, gender);
+                getline(infile, age);
+                getline(infile, city);
+                getline(infile, college);
+                getline(infile, wasteSpace);
+                int Age = stoi(age);
+                
+                
+                person tempPerson(name, password, gender, Age, city, college);
+                personArray.push_back(tempPerson);
+                cout<< personArray[count].getName()  << " " <<  personArray[count].getGender() << " " <<  personArray[count].getAge() << " " <<  personArray[count].getCity() << " " <<  personArray[count].getCollege() << endl ;
+                count++;
+
+                
+            }
+    }
+    
+    int countLines() const{
+        return count;
+    }
+
+void userMenu(person *personArray, string name, string password) {
     
    
         bool found = false;
@@ -40,7 +90,7 @@ void userMenu(person personArray[], string name, string password) {
                             cin >> friendName;
                             for(int d = 0; d < 3; d++) {
                                 if (friendName == personArray[d].getName()) {
-                                    personArray[i].addFriend(personArray[d]);
+                                    personArray[i].setFriend(personArray[d]);
                                 friendFound = true;
                                 }
                                     }
@@ -51,7 +101,7 @@ void userMenu(person personArray[], string name, string password) {
                             cin.ignore();
                             getline(cin, status);
                             cout << " " << endl;
-                            personArray[i].addStatus(status);
+                            personArray[i].setStatus(status);
                             break;
                             
                         case 3 :

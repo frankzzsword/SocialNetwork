@@ -21,9 +21,9 @@ class person {
 private:
     //name is the key for HASH and BST
     string name;
-
+    
     string password;
-    char gender;
+    string gender;
     int age;
     string city;
     string college;
@@ -34,11 +34,11 @@ private:
     
 public:
     person();
-    person ( string name, string password, char gender, int age,  string city,  string college);
+    person ( string name, string password, string gender, int age,  string city,  string college);
     //SETTER METHODS
     void setName( string item);
     void setPassword(string password);
-    void  setGender(char gender);
+    void  setGender(string gender);
     void  setAge(int age);
     void  setCity(string city);
     void  setCollege( string college);
@@ -50,12 +50,13 @@ public:
     //GETTER METHODS
     string getName() const;
     string getPassword() const;
-    char  getGender() const;
+    string getPwd() const;
+    string  getGender() const;
     int  getAge() const;
     string  getCity() const;
     string  getCollege() const;
     string getDate();
-
+    
     //PRINT METHODS
     void  printFriends() const;
     void  printStatus() const;
@@ -65,16 +66,27 @@ public:
     //Overloaded Functions for Binary Search Tree
     bool operator < (const person &otherObject)
     {
-        return name > otherObject.getName();
+        return name < otherObject.getName();
     }
-      bool operator > (const person &otherObject)
+    bool operator > (const person &otherObject)
     {
         return name > otherObject.getName();
     }
     
     bool operator == (const person &otherObject) {
         
-            return name == otherObject.getName();
+        return name == otherObject.getName();
+    }
+    
+    friend ostream &operator<<( ostream &output,  const person &D )
+    {
+        output << "Name: " << D.getName() << endl
+        << "Gender: " << D.getGender() << endl
+        << "Age: " << D.getAge() << endl
+        << "City: " << D.getCity() << endl
+        << "College: " << D.getCollege() << endl << endl;
+        
+        return output;
     }
 };
 

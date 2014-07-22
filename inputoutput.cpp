@@ -16,12 +16,16 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include "hashing.h"
+#include "BinarySearchTree.h"
+#include "BinarySearchTree.cpp"
+
 using namespace std;
 
 class inputoutput {
 
 public:
-    vector<person> personArray;
+    person personArray[100];
 int count;
 
     inputoutput() {
@@ -35,6 +39,7 @@ void readFile(string textname)  //dynamically allocate memory and storing each p
             string age;
             string city;
             string college;
+            string profilePicture;
             string wasteSpace;
         
         
@@ -48,13 +53,13 @@ void readFile(string textname)  //dynamically allocate memory and storing each p
                 getline(infile, age);
                 getline(infile, city);
                 getline(infile, college);
+                getline(infile, profilePicture);
                 getline(infile, wasteSpace);
-                int Age = stoi(age);
-                
-                
-                person tempPerson(name, password, gender, Age, city, college);
-                personArray.push_back(tempPerson);
-                cout<< personArray[count].getName()  << " " <<  personArray[count].getGender() << " " <<  personArray[count].getAge() << " " <<  personArray[count].getCity() << " " <<  personArray[count].getCollege() << endl ;
+                int Age = atoi(age.c_str());
+
+                person tempPerson(name, password, gender, Age, city, college, profilePicture);
+                personArray[count] = tempPerson;
+                cout << personArray[count];
                 count++;
 
                 
@@ -70,14 +75,15 @@ void userMenu(person *personArray, string name, string password) {
    
         bool found = false;
         bool options = true;
-        
-        for( int i = 0; i < 3; i++) {
-            if(personArray[i].getName() == name && personArray[i].getPassword() == password) {
+    
+        for( int i = 0; i < 12; i++) {
+            if(personArray[i].getName() == name && personArray[i].getPwd() == password) {
                 found = true;
                 while(options == true) {
                     cout << "-------------"<< personArray[i].getName() << " Profile --------------" << endl;;
                     cout << "Choose an option from below" << endl;
-                    cout << "1. Add a friend" << endl << "2. Write a new Status Message" << endl << "3. Send a message" << endl << "4. Show your friends" << endl << "5. Show your status messages" << endl << "6. Show your messages " << endl << "7. Logout" << endl;
+                    cout << "1. Add a friend" << endl << "2. Write a new Status Message" << endl << "3. Send a message" << endl << "4. Show your friends" << endl << "5. Show your status messages" <<
+						endl << "6. Show your messages " << endl << "7. Logout" << endl  << "[Choose Your Option] : " ;
                     int option;
                     string friendName;
                     string message;
@@ -149,10 +155,80 @@ void userMenu(person *personArray, string name, string password) {
         }
     }
     
-    void adminMenu() {
-        
+    void adminMenu(inputoutput &obj, string password) {
+		if (password != "vno")
+		{ 
+			cout << "incorrect username or password";
+			return;
+		}
+			
+
+	hashing hashfunc;
+    BinarySearchTree<person> tree;
+    for(int i = 0; i < 10; i++) {
+        hashfunc.addObject(obj.personArray[i]);
     }
     
-    
-    
+	for(int i = 0; i < 12; i++) {
+            tree.insert(obj.personArray[i]);
+        }
+
+
+	bool options = true;
+    while(options == true) {
+		  cout <<  "-------------------- ADMINISTRATOR  --------------" << endl;;
+                    cout << "Choose an option from below" << endl;
+					cout << "1. Create a new Profle" <<endl << "2. Delete a Person" << endl << "3. Search a person by Name" << endl << "4. Print the Hash Table" << endl << "5. Print the Binary Tree" << endl << "6. Print Indented Tree"
+						<<endl << "7. Write to File" << endl << "8. Usage Statistics" << endl << "9. Logout" << endl << "[Choose Your Option] : " ;
+					int option;
+					cin >> option;
+					
+					switch(option) {
+					case 1 : 
+
+						break;
+					case 2 : 
+
+						break;
+
+					case 3 : 
+
+						break;
+
+					case 4 : 
+						hashfunc.PrintTable();
+						break;
+
+					case 5 :
+				       tree.print_inOrder();
+						break;
+
+					case 6:
+
+						break;
+
+					case 7 :
+
+						break;
+
+					case 8 :
+
+						break;
+
+					case 9 :
+						options = false;
+						break;
+					default :
+						cout << "Please enter the correct choice:" ;
+	}
+
+
+	
+  
+	}
+	 if(options == false) {
+	cout << "You have been logged out" <<endl;
+		return;
+	}
+	}
 };

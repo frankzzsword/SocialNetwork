@@ -2,10 +2,12 @@
 
 #include <iostream>
 #include "BinarySearchTree.h"
+#include "person.h"
 using namespace std;
 
 
-void BinarySearchTree::insert(int d)
+template <class itemType>
+void BinarySearchTree<itemType>::insert(itemType d)
 {
 	node* n = new node;
 	node* parent = NULL;
@@ -47,7 +49,8 @@ void BinarySearchTree::insert(int d)
 	}
 }
 
-void BinarySearchTree::remove(int d)
+template <class itemType>
+void BinarySearchTree<itemType>::remove(itemType d)
 {
 	node* current = root;
 	node* parent;
@@ -178,21 +181,24 @@ void BinarySearchTree::remove(int d)
 	}
 }
 
-void BinarySearchTree::print_inOrder()
+template <class itemType>
+void BinarySearchTree<itemType>::print_inOrder()
 {
 	inOrder(root);
 }
 
-void BinarySearchTree::inOrder(node* i)
+template <class itemType>
+void BinarySearchTree<itemType>::inOrder(node* i)
 {
 	if(i != NULL)
 	{
+		cout<<i->data;
 		if(i->left) 
 		{
 		inOrder(i->left);
 		}
 
-		cout<<i->data<<" ";
+	
 
 		if(i->right) 
 		{
@@ -204,8 +210,24 @@ void BinarySearchTree::inOrder(node* i)
 
 int main()
 {
-	BinarySearchTree B1;
-	int optionNumber,input1,input2;
+	BinarySearchTree<person> B1;
+	person Varun("Varun", "me" ,'M', 23, "Sunnyvale", "De Anza");
+    person Ted("Ted","you", 'M', 20, "San Francisco", "Berkeley");
+    person Matt("Matt","them", 'M', 22, "Armenia", "Berkeley");
+    person Danny("Danny" , "no", 'M', 22, "Armenia", "Berkeley");
+	person Zhao("Zhao", "me" ,'M', 23, "Sunnyvale", "De Anza");
+    
+	person personArray[] = {Matt, Zhao, Varun, Danny, Ted};
+
+	for(int i = 0; i < 5; i++) {
+		B1.insert(personArray[i]);
+	}
+
+	B1.print_inOrder();
+	int a;
+	cin >> a;
+
+	/*int optionNumber,input1,input2;
 	while(1)
 	{
 		cout<<endl<<"Enter option number:"<<endl;
@@ -229,9 +251,8 @@ int main()
 			cin>>input2;
 			B1.remove(input2);
 			break;
-		case 4 : 
+		case 4 : */
 			return 0;
 
-		}
-	}
+	
 }

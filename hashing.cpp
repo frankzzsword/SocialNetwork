@@ -11,10 +11,11 @@ hashing::hashing()
 	{
 	    HashTable[i] = new item;
 		HashTable[i]->hashedPerson.setName("empty");
-		HashTable[i]->hashedPerson.setGender('N');
+		HashTable[i]->hashedPerson.setPassword("empty");
+		HashTable[i]->hashedPerson.setGender("empty");
 	    HashTable[i]->hashedPerson.setAge(0);
-		HashTable[i]->hashedPerson.addCity("empty");
-		HashTable[i]->hashedPerson.addCollege("empty");
+		HashTable[i]->hashedPerson.setCity("empty");
+		HashTable[i]->hashedPerson.setCollege("empty");
 		HashTable[i]->next = 0;
 	}
 
@@ -52,10 +53,11 @@ void hashing::addObject(person &personObj)
 	if(HashTable[index]->hashedPerson.getName() == "empty")
 	{
 		HashTable[index]->hashedPerson.setName(personObj.getName());
+		HashTable[index]->hashedPerson.setPassword(personObj.getPassword());
 		HashTable[index]->hashedPerson.setGender(personObj.getGender());
 		HashTable[index]->hashedPerson.setAge(personObj.getAge());
-		HashTable[index]->hashedPerson.addCity(personObj.getCity());
-		HashTable[index]->hashedPerson.addCollege(personObj.getCollege());
+		HashTable[index]->hashedPerson.setCity(personObj.getCity());
+		HashTable[index]->hashedPerson.setCollege(personObj.getCollege());
 	}
 
 	else
@@ -63,10 +65,11 @@ void hashing::addObject(person &personObj)
 		item* Ptr = HashTable[index];
 		item* n = new item;
 		n->hashedPerson.setName(personObj.getName());
+		n->hashedPerson.setPassword(personObj.getPassword());
 		n->hashedPerson.setGender(personObj.getGender());
 		n->hashedPerson.setAge(personObj.getAge());
-		n->hashedPerson.addCity(personObj.getCity());
-		n->hashedPerson.addCollege(personObj.getCollege());
+		n->hashedPerson.setCity(personObj.getCity());
+		n->hashedPerson.setCollege(personObj.getCollege());
 		n->next = 0;
 
 		while(Ptr->next != 0)
@@ -117,14 +120,15 @@ void hashing::PrintTable()
 			while( Ptr != 0)
 			{
 				cout << Ptr->hashedPerson.getName() << endl;
+				cout << Ptr->hashedPerson.getPassword() << endl;
 				cout << Ptr->hashedPerson.getGender() << endl;
 				cout << Ptr->hashedPerson.getAge() << endl;
 				cout << Ptr->hashedPerson.getCity() << endl;
 				cout << Ptr->hashedPerson.getCollege() << endl;
 				cout << "--------------------------\n";
 				Ptr = Ptr->next;
-			
 			}
+			
 		 }
 
 	}
@@ -148,10 +152,11 @@ void hashing::removeObject(person &personObj) // remove the object from hash tab
 	else if( HashTable[index]->hashedPerson.getName() == personObj.getName() && HashTable[index]->next == 0)
 	{
 		HashTable[index]->hashedPerson.setName("empty");
-		HashTable[index]->hashedPerson.setGender('N');
+		HashTable[index]->hashedPerson.setPassword("empty");
+		HashTable[index]->hashedPerson.setGender("empty");
 	    HashTable[index]->hashedPerson.setAge(0);
-		HashTable[index]->hashedPerson.addCity("empty");
-		HashTable[index]->hashedPerson.addCollege("empty");
+		HashTable[index]->hashedPerson.setCity("empty");
+		HashTable[index]->hashedPerson.setCollege("empty");
 		cout << personObj.getName() << " is removed from the hash table!\n";
 	}
 	

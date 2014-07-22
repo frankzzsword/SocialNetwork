@@ -24,13 +24,14 @@ person::person ( ) {
 };
 
 // setter constructor
-person::person ( string name, string password, string gender, int age,  string city,  string college){
+person::person ( string name, string password, string gender, int age,  string city,  string college, string profilePicture){
     this->name = name;
     this->password = password;
     this->gender = gender;
     this->age = age;
     this->city = city;
     this->college = college;
+    this->profilePicture = profilePicture;
 };
 void person::setName( string name) {
     this->name = name;
@@ -56,6 +57,10 @@ void  person::setStatus( string newStatus) {
     status.push_back(timeNow + "\n");
 }
 
+
+void person::setProfilePic(string profilePicture) {
+    this->profilePicture = profilePicture;
+}
 
 //void  receiveMessage( string message) {
 //    messages.push_back(message);
@@ -129,6 +134,10 @@ string person:: getCity() const {
 }
 string  person::getCollege() const {
     return college;
+}
+
+string  person::getProfilePic() const {
+    return profilePicture;
 }
 
 void  person::printFriends() const {

@@ -27,6 +27,7 @@ private:
     int age;
     string city;
     string college;
+    string profilePicture;
     vector<person> friends;
     vector< string> status;
     //string is name of the friend and the vectors are for the messages
@@ -34,7 +35,7 @@ private:
     
 public:
     person();
-    person ( string name, string password, string gender, int age,  string city,  string college);
+    person ( string name, string password, string gender, int age,  string city,  string college, string profilePicture);
     //SETTER METHODS
     void setName( string item);
     void setPassword(string password);
@@ -42,6 +43,7 @@ public:
     void  setAge(int age);
     void  setCity(string city);
     void  setCollege( string college);
+    void  setProfilePic( string ProfilePicture);
     void  setStatus( string newStatus);
     void  setFriend(person &friendName);
     void  receiveMessage(person&friendName ,string message);
@@ -55,6 +57,7 @@ public:
     int  getAge() const;
     string  getCity() const;
     string  getCollege() const;
+    string getProfilePic() const;
     string getDate();
     
     //PRINT METHODS
@@ -80,11 +83,12 @@ public:
     
     friend ostream &operator<<( ostream &output,  const person &D )
     {
-        output << "Name: " << D.getName() << endl
+        output <<" **** " << D.getProfilePic()<<  " **** "<< endl<< "Name: " << D.getName() << endl
         << "Gender: " << D.getGender() << endl
         << "Age: " << D.getAge() << endl
         << "City: " << D.getCity() << endl
         << "College: " << D.getCollege() << endl << endl;
+        
         
         return output;
     }

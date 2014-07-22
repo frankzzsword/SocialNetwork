@@ -7,8 +7,8 @@ In BST  (Varun, Andrew and Danny)
   - Rebalancing the trees
   - Binary Search (Will use this for user login)
   - Printing Trees in Binary Form
-  - Make a Destructor for BST 
-  
+  - Make a Destructor for BST  (free memory)
+   
   
 In Hash (Boya)
   - Choose a prime Number for tableSize
@@ -16,11 +16,11 @@ In Hash (Boya)
   - Search function
   - Load Factor
   - Resize Array if Load Factor is more than 75%
-  - Make a Destructor for Hash
+  - Make a Destructor for Hash (free memory)
   
   
 In  IO ( Varun and Hsei)
-  - Making the whole User Interfact nicer
+  - Making the whole User Interface nicer
   - Write out to the file
   - Admin menu
                 ************** MENU ************
@@ -51,6 +51,7 @@ Main function  ( Varun )
       
 Person Class ( Varun )
     - add a destructor 
+    - delete vectors and arrays
     
     
 OTHER IDEAS:

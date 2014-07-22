@@ -1,8 +1,9 @@
 // GITHUB HAS A ISSUE SYSTEM, where we can post issues regarding specific files or post questions
 Lets use that instead since its easier to track what's going on and what problems we're facing.
 
-REQUIRED: (Varun, Andrew and Danny)
-In BST
+REQUIRED:
+**********************************************************************
+In BST  (Varun, Andrew and Danny)
   - Rebalancing the trees
   - Binary Search (Will use this for user login)
   - Printing Trees in Binary Form
@@ -53,6 +54,7 @@ Person Class ( Varun )
     
     
 OTHER IDEAS:
+**************************************************************************************************
 SIGN UP..
 
 So when we start the app, we get an option to login, create a new user account and quit, if we create a user account 

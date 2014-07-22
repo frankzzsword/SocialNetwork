@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <string>
-#include "person.cpp"
+#include "person.h"
 using namespace std; 
 
 

@@ -100,6 +100,7 @@ int hashing::NumberOfItemsInIndex(int index)
 //Print information in hash table
 void hashing::PrintTable()
 {
+    cout << "****** PRINTING HASH TABLE *******" << endl;
     int number;
     for(int i = 0; i < tableSize; i++)
     {
@@ -111,13 +112,7 @@ void hashing::PrintTable()
             item* Ptr = HashTable[i];
             while( Ptr != 0)
             {
-                cout << Ptr->hashedPerson.getName() << endl;
-                cout << Ptr->hashedPerson.getPassword() << endl;
-                cout << Ptr->hashedPerson.getGender() << endl;
-                cout << Ptr->hashedPerson.getAge() << endl;
-                cout << Ptr->hashedPerson.getCity() << endl;
-                cout << Ptr->hashedPerson.getCollege() << endl;
-                cout << endl;
+                cout << Ptr->hashedPerson << endl;
                 Ptr = Ptr->next;
             }
             

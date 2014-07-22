@@ -1,23 +1,28 @@
 // GITHUB HAS A ISSUE SYSTEM, where we can post issues regarding specific files or post questions
 Lets use that instead since its easier to track what's going on and what problems we're facing.
 
-REQUIRED:
+REQUIRED: (Varun, Andrew and Danny)
 In BST
   - Rebalancing the trees
   - Binary Search (Will use this for user login)
   - Printing Trees in Binary Form
-
-In Hash
+  - Make a Destructor for BST 
+  
+  
+In Hash ( Varun and Boya)
   - Choose a prime Number for tableSize
   - Put the statistics out (Number of Collision, Largest Collision Chain, Load Factor, Number of elements)
   - Search function
   - Load Factor
   - Resize Array if Load Factor is more than 75%
-
-In  Menu
+  - Make a Destructor for Hash
+  
+  
+In  IO ( Varun and Hsei)
+  - Making the whole User Interfact nicer
   - Write out to the file
   - Admin menu
-                  ************** MENU ************
+                ************** MENU ************
                 *                              *
                 *   A - Add a Person           *
                 *   D - Delete Person          *
@@ -31,17 +36,24 @@ In  Menu
                 *   L - Log Out                *
                 *                              *
                 ********************************
-  - 
+  *  userMenu
+    * it will consist of 2 user menus.
+     * it will have userMenu with (Add friend, send message, read messages, delete friend, set status message)
+     * and admin userMenu (change Name, change password, change city, change college);
   
-  
-  
-  User Menu
-  - It will have 2 different menus.. one for User Profile
-  -2nd for User Admin where user can change 
-
+Main function  ( Varun )
+  - Take the elements from the hash table, put them in the binary search tree
+  - Insert Manager (Inserts in Hash Table and BST)
+  - Delete Manger (Deletes from Hash Table and BST)
+  - Putting everything together
+      
+      
+Person Class ( Varun )
+    - add a destructor 
+    
+    
 OTHER IDEAS:
 SIGN UP..
 
-So when we start the app, we get an option to login or create a new user account, if we create a user account 
-it works exactly the same way as we will do in the admin menu.
-
+So when we start the app, we get an option to login, create a new user account and quit, if we create a user account 
+it works exactly the same way as we will do in the admin menu while creating a new person.

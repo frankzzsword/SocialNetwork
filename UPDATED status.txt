@@ -15,7 +15,7 @@ In Hash (Boya)
   - Put the statistics out (Number of Collision, Largest Collision Chain, Load Factor, Number of elements)
   - Search function
   - Load Factor
-  - Resize Array if Load Factor is more than 75%
+  - Resize Array if Load Factor is more than 50%
   - Make a Destructor for Hash (free memory)
   
   

@@ -5,8 +5,13 @@
 using namespace std;
 
 //Default constructor
-hashing::hashing()
+hashing::hashing(int size)
 {
+    size = size *2;
+    getPrime(size);
+    tableSize = size;
+    cout << " table size : " << tableSize << "END";
+    HashTable = new item*[tableSize];
     for(int i=0; i< tableSize; i++)
     {
         HashTable[i] = new item;
@@ -174,7 +179,7 @@ void hashing::removeObject(person &personObj) // remove the object from hash tab
             cout << "Person not found in the hash table!\n";
         }
         //case 3.2 - match is found
-        else 
+        else
         {
             delPtr = p1;
             p1 = p1->next;
@@ -182,6 +187,24 @@ void hashing::removeObject(person &personObj) // remove the object from hash tab
             delete delPtr;
             delPtr = 0;
             cout << personObj.getName() << " is removed from the hash table!\n";
+        }
+    }
+}
+
+/**************************Get Prime**************************/
+void hashing::getPrime(int &num) {
+    int i, j;
+    for ( i = num; i < num+40; ++i)
+    {
+        for ( j = 2; j <= i/2; j++ )
+        {
+            if ( ! ( i % j ) ) break;
+        }
+        
+        if ( j > i / 2 )
+        {
+            num = i;
+            break;
         }
     }
 }

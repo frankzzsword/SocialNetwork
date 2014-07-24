@@ -10,18 +10,19 @@
 #include <cstdio>
 #include "person.h"
 #include "inputoutput.cpp"
+#include "BinarySearchTree.h"
 
 
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-
-	 inputoutput menu;
+   
+    inputoutput menu;
     menu.readFile("names.txt");
-
+    
     int input = 0;
     while(input != 2) {
-		cout << "\n-------------------Welcome to the Social Network---------------------\n\n\n";
+        cout << "\n-------------------Welcome to the Social Network---------------------\n\n\n";
         string name;
         string password;
         cout << "Username: ";
@@ -30,10 +31,10 @@ int main(int argc, const char * argv[]) {
         cout << "Password: ";
         cin>>password;
         
-        if(name != "admin") 
+        if(name != "admin")
             menu.userMenu(menu.personArray, name, password);
         else
-			menu.adminMenu(menu, password);
-        }
+            menu.adminMenu(menu, password);
+    }
     
 }

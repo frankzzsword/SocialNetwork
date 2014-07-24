@@ -12,14 +12,6 @@ hashing::hashing(int size)
     tableSize = size;
     cout << " table size : " << tableSize << "END";
     HashTable = new item*[tableSize];
-    for(int i=0; i< tableSize; i++)
-    {
-        HashTable[i] = new item;
-        HashTable[i]->hashedPerson.setName("empty");
-        HashTable[i]->next = 0;
-    }
-    
-    
 }
 
 /**************************** Hash ***************************************/
@@ -48,32 +40,19 @@ void hashing::addObject(person &personObj)
     
     int index = Hash(personObj.getName());
     
-    if(HashTable[index]->hashedPerson.getName() == "empty")
+    if(HashTable[index] == NULL)
     {
-        HashTable[index]->hashedPerson.setName(personObj.getName());
-        HashTable[index]->hashedPerson.setPassword(personObj.getPassword());
-        HashTable[index]->hashedPerson.setGender(personObj.getGender());
-        HashTable[index]->hashedPerson.setAge(personObj.getAge());
-        HashTable[index]->hashedPerson.setCity(personObj.getCity());
-        HashTable[index]->hashedPerson.setCollege(personObj.getCollege());
+        HashTable[index] = new item;
+        HashTable[index]->hashedPerson = &personObj;
+        HashTable[index]->next =0;
     }
     
     else
-    {
-        item* Ptr = HashTable[index];
-        item* n = new item;
-        n->hashedPerson.setName(personObj.getName());
-        n->hashedPerson.setPassword(personObj.getPassword());
-        n->hashedPerson.setGender(personObj.getGender());
-        n->hashedPerson.setAge(personObj.getAge());
-        n->hashedPerson.setCity(personObj.getCity());
-        n->hashedPerson.setCollege(personObj.getCollege());
-        n->next = 0;
-        
-        while(Ptr->next != 0)
-        {
-            Ptr = Ptr->next;
-        }
+    {   item* n = new item;
+        n->hashedPerson = &personObj;
+        HashTable[index] = n;
+        HashTable[index]->hashedPerson = &
+        n->next = Ptr;
         Ptr->next = n;
     }
 }

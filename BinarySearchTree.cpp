@@ -6,11 +6,11 @@ using namespace std;
 
 
 template <class itemType>
-void BinarySearchTree<itemType>::insert(itemType d)
+void BinarySearchTree<itemType>::insert(itemType &d)
 {
     node* n = new node;
     node* parent = NULL;
-    n->data = d;
+    n->data = &d;
     n->left = n->right = NULL;
     
     //if BST is empty, assign a new node as root
@@ -183,6 +183,7 @@ void BinarySearchTree<itemType>::remove(itemType d)
 template <class itemType>
 void BinarySearchTree<itemType>::print_inOrder()
 {
+     cout << "****** PRINTING BINARY SEARCH TREE *******" << endl;
     inOrder(root);
 }
 
@@ -195,7 +196,7 @@ void BinarySearchTree<itemType>::inOrder(node* i)
         {
             inOrder(i->left);
         }
-        cout<< i->data;
+        cout<< *i->data;
         
         if(i->right)
         {

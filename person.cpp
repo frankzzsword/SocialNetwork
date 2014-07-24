@@ -25,14 +25,15 @@ person::person ( ) {
 };
 
 // setter constructor
-person::person ( string name, string password, string gender, int age,  string city,  string college, string profilePicture){
+person::person ( string name, string password, string gender, int age,  string city,  string college){
     this->name = name;
     this->password = password;
     this->gender = gender;
     this->age = age;
     this->city = city;
     this->college = college;
-    this->profilePicture = profilePicture;
+    next = NULL;
+    relationship = NULL;
 };
 void person::setName( string name) {
     this->name = name;
@@ -53,25 +54,33 @@ void  person::setCollege( string college) {
     this->college = college;
 }
 
+void  person::setRelationship(person *lover){
+    //if either one breaks up
+    if (lover == NULL) {
+        relationship->relationship = NULL;
+        relationship = NULL;
+        return;
+    }
+    //Case 1, if both are single
+    else if(this->relationship == NULL)
+    { relationship = lover;
+      lover->relationship = this;
+      this->addFriend(*lover);
+    }
+    //Case 2, if both are committed to each other
+    else if(this->relationship != lover) {
+        relationship->setRelationship(NULL);
+        relationship = lover;
+        lover->setRelationship(this);
+    }
+        
+
+}
+
 void  person::setStatus( string newStatus) {
     string timeNow  = getDate()+newStatus;
     status.push_back(timeNow + "\n");
 }
-
-
-void person::setProfilePic(string profilePicture) {
-    this->profilePicture = profilePicture;
-}
-
-//void  receiveMessage( string message) {
-//    messages.push_back(message);
-//}
-
-
-//void  sendMessage(person &friendName,  string message) {
-//      string messageName = this->name + "\n" + message;
-//      friendName.receiveMessage(getDate() +messageName+ " \n");
-//}
 
 void  person::receiveMessage(person&friendName ,string message) {
     friendName.text[this->name].push_back(message);
@@ -79,16 +88,39 @@ void  person::receiveMessage(person&friendName ,string message) {
 
 
 void  person::sendMessage(person &friendName,  string message) {
-    string messageName = this->name + "  " + getDate() + message + "\n";
-    string firstName = friendName.getName();
-    text[firstName].push_back(messageName);
-    friendName.receiveMessage(friendName, messageName);
-};
+    bool found = false;
+    if (&friendName == this)
+    {
+        cout << "You cannot send a message to yourself." <<  endl;
+        return;
+    }
+    if (friends.size() == 0) {
+        cout << "In order to send a message, you need to be friends with this person";
+        return;
+    }
+    
+    for (int i = 0; i < friends.size(); i++ ) {
+        if (friends[i]->name == friendName.name) {
+            found = true;
+        }
+        
+    }
+    if(found) {
+        string messageName = this->name + "  " + getDate() + message + "\n";
+        string firstName = friendName.getName();
+        text[firstName].push_back(messageName);
+        friendName.receiveMessage(friendName, messageName);
+    }
+    else
+    {
+        cout << "In order to send a message, you need to be friends with this person";
+    }
+    };
 
 
 
 
-void  person::setFriend(person &friendName) {
+void  person::addFriend(person &friendName) {
     // NOTE : check if already exists or if it is the same person
     
     if (&friendName == this)
@@ -97,14 +129,32 @@ void  person::setFriend(person &friendName) {
         return;
     }
     for (int i = 0; i < friends.size(); i++ ) {
-        if (friends[i].name == friendName.name) {
+        if (friends[i]->name == friendName.name) {
             cout << "You cannot add the same friend twice." <<  endl;
             return  ;
         }
     }
-    friends.push_back(friendName);
-    friendName.friends.push_back(*this);
+    friends.push_back(&friendName);
+    friendName.friends.push_back(this);
     cout << name << " and " << friendName.name << " are now friend " <<  endl;
+}
+
+void  person::deleteFriend(person &friendName) {
+    // NOTE : check if already exists or if it is the same person
+    
+    if (&friendName == this)
+    {
+        cout << "You cannot delete yourself." <<  endl;
+        return;
+    }
+    for (int i = 0; i < friends.size(); i++ ) {
+        if (friends[i]->name == friendName.name) {
+            friends.erase(friends.begin() + i);
+            friendName.deleteFriend(*this);
+            return  ;
+        }
+    }
+    cout << name << " and " << friendName.name << " are no longer friends." <<  endl;
 }
 string person::getName() const {
     return name;
@@ -137,8 +187,16 @@ string  person::getCollege() const {
     return college;
 }
 
-string  person::getProfilePic() const {
-    return profilePicture;
+string  person::getRelationship() const {
+    if(relationship == NULL) {
+        return "Single";
+    }
+    else
+    {
+        string relationStatus;
+        relationStatus = "Committed with " + relationship->getName();
+        return relationStatus;
+    }
 }
 
 void  person::printFriends() const {
@@ -149,7 +207,7 @@ void  person::printFriends() const {
     {
         cout << "Friends of " << name <<  endl;
         for (int i=0; i<friends.size();i++){
-            cout << friends[i].name <<  endl;
+            cout << friends[i]->name <<  endl;
         }
     }
     

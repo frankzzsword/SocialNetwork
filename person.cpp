@@ -22,6 +22,7 @@ person::person ( ) {
     city = " ";
     college = " ";
     next = NULL;
+    deactivate = false;
 };
 
 // setter constructor
@@ -32,6 +33,7 @@ person::person ( string name, string password, string gender, int age,  string c
     this->age = age;
     this->city = city;
     this->college = college;
+    deactivate = false;
     next = NULL;
     relationship = NULL;
 };
@@ -80,6 +82,10 @@ void  person::setRelationship(person *lover){
 void  person::setStatus( string newStatus) {
     string timeNow  = getDate()+newStatus;
     status.push_back(timeNow + "\n");
+}
+
+void  person::deactivateAccount( bool deactivate) {
+    this->deactivate = deactivate;
 }
 
 void  person::receiveMessage(person&friendName ,string message) {
@@ -186,6 +192,11 @@ string person:: getCity() const {
 string  person::getCollege() const {
     return college;
 }
+
+bool  person::getStatus() const {
+    return deactivate;
+}
+
 
 string  person::getRelationship() const {
     if(relationship == NULL) {

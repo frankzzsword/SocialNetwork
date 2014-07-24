@@ -11,7 +11,7 @@ class BinarySearchTree
 private:
     struct node
     {
-        itemType data;
+        person *data;
         node* left;
         node* right;
     };
@@ -20,10 +20,10 @@ private:
 public:
     BinarySearchTree() {root = NULL;}
     bool isEmpty() const {return root == NULL;} //checks if BST is empty
-    void insert(itemType data); //insert an item into the BST
+    void insert(itemType &data); //insert an item into the BST
     void remove(itemType data); //removes an item from the BST
     void inOrder(node*); //calculates the in-order traversal
     void print_inOrder(); //prints the in-order traversal
-    
+
 };
 #endif

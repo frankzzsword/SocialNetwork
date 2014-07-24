@@ -16,7 +16,7 @@ private:
     int tableSize;
     struct item
     {
-        person hashedPerson ;
+        person *hashedPerson ;
         item* next;
         item() {};
     };

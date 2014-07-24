@@ -3,7 +3,11 @@ Lets use that instead since its easier to track what's going on and what problem
 
 REQUIRED:
 **********************************************************************
-In BST  (Varun, Andrew and Danny)
+
+NEW ROLE : DANNY (HEAD of IO)
+IO - make it consistent, use colors. clear screen, figure out a nice theme.
+
+In BST  (Varun, Andrew)
   - Rebalancing the trees
   - Binary Search (Will use this for user login)
   - Printing Trees in Binary Form
@@ -19,8 +23,7 @@ In Hash (Boya)
   - Make a Destructor for Hash (free memory)
   
   
-In  IO ( Varun and Hsei)
-  - Making the whole User Interface nicer
+In  IO ( Hsei)
   - Write out to the file
   - Admin menu
                 ************** MENU ************

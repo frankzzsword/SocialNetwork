@@ -21,7 +21,6 @@ class person {
 private:
     //name is the key for HASH and BST
     string name;
-    
     string password;
     string gender;
     int age;
@@ -32,6 +31,7 @@ private:
     vector< string> status;
     //string is name of the friend and the vectors are for the messages
     map<string, vector<string> > text;
+    person *next;
     
 public:
     person();
@@ -81,13 +81,19 @@ public:
         return name == otherObject.getName();
     }
     
+    bool operator != (const person &otherObject) {
+        
+        return name != otherObject.getName();
+    }
+
+    
     friend ostream &operator<<( ostream &output,  const person &D )
     {
-        output <<" **** " << D.getProfilePic()<<  " **** "<< endl<< "Name: " << D.getName() << endl
-        << "Gender: " << D.getGender() << endl
-        << "Age: " << D.getAge() << endl
-        << "City: " << D.getCity() << endl
-        << "College: " << D.getCollege() << endl << endl;
+        output <<" ************************************* "<< endl <<"*  Name: "<<setw(10) << D.getName() <<"  *"<<endl
+        << "*  Gender: " << D.getGender() << endl
+        << "*  Age: " << D.getAge() << endl
+        << "*  City: " << D.getCity() << endl
+        << "*  College: " << D.getCollege() << endl << endl;
         
         
         return output;

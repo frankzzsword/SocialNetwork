@@ -21,6 +21,7 @@ person::person ( ) {
     age = 0;
     city = " ";
     college = " ";
+    next = NULL;
 };
 
 // setter constructor
@@ -119,7 +120,7 @@ string person::getPassword() const {
 }
 
 string person::getPwd() const {
-        return password;
+    return password;
 }
 
 string  person::getGender() const {

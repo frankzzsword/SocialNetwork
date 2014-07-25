@@ -205,3 +205,22 @@ void BinarySearchTree<itemType>::inOrder(node* i)
     }
     else return;
 }
+template <class itemType>
+itemType* BinarySearchTree<itemType>::_search(node* i ,itemType &key) {
+    
+    
+   	if(i == NULL) return i->data;
+    
+    if(*i->data == key) return i->data;
+    else {
+        if(*i->data < key)
+            return _search(i->right, key) ;
+        else
+            return _search(i->left, key);
+    }
+
+}
+template <class itemType>
+itemType* BinarySearchTree<itemType>::search(itemType &key) {
+    return _search(root, key);
+}

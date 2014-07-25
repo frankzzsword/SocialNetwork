@@ -24,6 +24,8 @@ public:
     void remove(itemType data); //removes an item from the BST
     void inOrder(node*); //calculates the in-order traversal
     void print_inOrder(); //prints the in-order traversal
-
+    itemType* _search(node* ,itemType &d);
+    itemType* search(itemType &d);
+    
 };
 #endif

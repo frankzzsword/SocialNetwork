@@ -22,7 +22,7 @@ void BinarySearchTree<itemType>::insert(itemType &d)
         {
             parent = current;
             //if data in new node is greater than data in current node, assign data on right of current node as current
-            if(n->data > current->data)
+            if(*n->data > *current->data)
             {
                 current = current->right;
             }
@@ -35,7 +35,7 @@ void BinarySearchTree<itemType>::insert(itemType &d)
         }
         
         //if data in new node is less than data in parent node, assign new node as left of parent
-        if(n->data < parent->data)
+        if(*n->data < *parent->data)
         {
             parent->left = n;
         }
@@ -64,7 +64,7 @@ void BinarySearchTree<itemType>::remove(itemType d)
     
     while(current != NULL)
     {
-        if(current->data == d)
+        if(*current->data == d)
         {
             found = 1;
             break;
@@ -73,7 +73,7 @@ void BinarySearchTree<itemType>::remove(itemType d)
         {
             parent = current;
             
-            if(d>current->data)
+            if(*d>current->data)
             {
                 current = current->right;
             }
@@ -163,7 +163,7 @@ void BinarySearchTree<itemType>::remove(itemType d)
                     leftCurrentPred = leftCurrent;
                     leftCurrent = leftCurrent->left;
                 }
-                current->data = leftCurrent->data;
+                *current->data = *leftCurrent->data;
                 delete leftCurrent;
                 leftCurrentPred->left = NULL;
             }
@@ -171,7 +171,7 @@ void BinarySearchTree<itemType>::remove(itemType d)
             {
                 node* input1;
                 input1 = current->right;
-                current->data = input1->data;
+                *current->data = *input1->data;
                 current->right = input1->right;
                 delete input1;
             }
@@ -183,7 +183,7 @@ void BinarySearchTree<itemType>::remove(itemType d)
 template <class itemType>
 void BinarySearchTree<itemType>::print_inOrder()
 {
-     cout << "****** PRINTING BINARY SEARCH TREE *******" << endl;
+    cout << "****** PRINTING BINARY SEARCH TREE *******" << endl;
     inOrder(root);
 }
 
@@ -209,7 +209,7 @@ template <class itemType>
 itemType* BinarySearchTree<itemType>::_search(node* i ,itemType &key) {
     
     
-   	if(i == NULL) return i->data;
+   	if(i == NULL) return NULL;
     
     if(*i->data == key) return i->data;
     else {
@@ -218,7 +218,7 @@ itemType* BinarySearchTree<itemType>::_search(node* i ,itemType &key) {
         else
             return _search(i->left, key);
     }
-
+    
 }
 template <class itemType>
 itemType* BinarySearchTree<itemType>::search(itemType &key) {

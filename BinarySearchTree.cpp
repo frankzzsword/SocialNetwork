@@ -24,13 +24,15 @@ void BinarySearchTree<itemType>::insert(itemType &d)
             //if data in new node is greater than data in current node, assign data on right of current node as current
             if(*n->data > *current->data)
             {
+               
                 current = current->right;
-            }
+                          }
             
             else
             {
                 //otherwise, assign data on left of current node as current
-                current = current->left;
+                               current = current->left;
+                
             }
         }
         
@@ -47,9 +49,45 @@ void BinarySearchTree<itemType>::insert(itemType &d)
         }
     }
 }
+//
+//template <class itemType>
+//typename BinarySearchTree<itemType>::node* BinarySearchTree<itemType>::insert(node* i, itemType &d_IN){
+//    if(i == NULL)  // (1) If we are at the end of the tree place the value
+//    {
+//        node* n = new node;
+//        n->data = &d_IN;
+//        n->left = n->right = NULL;
+//        i = n;
+//    }
+//    else if(d_IN < *i->data){  //(2) otherwise go left if smaller
+//        insert(i->left, d_IN);
+//        if(Height(i->left) - Height(i->right) == 2){
+//            if(d_IN < *i->left->data)
+//                rotateLeftOnce(i);
+//            else
+//                rotateLeftTwice(i);
+//        }
+//    }
+//    else if(d_IN > *i->data){ // (3) otherwise go right if bigger
+//        insert(i->right, d_IN);
+//        if(Height(i->right) - Height(i->left) == 2){
+//            if(d_IN > *i->right->data)
+//                rotateRightOnce(i);
+//            else
+//                rotateRightTwice(i);
+//        }
+//    }
+//    return i;
+//}
+//
+//template <class itemType>
+//void BinarySearchTree<itemType>::insert(itemType &data){
+// 
+//    insert(root, data);
+//}
 
 template <class itemType>
-void BinarySearchTree<itemType>::remove(itemType d)
+void BinarySearchTree<itemType>::remove(itemType &d)
 {
     node* current = root;
     node* parent;
@@ -66,14 +104,14 @@ void BinarySearchTree<itemType>::remove(itemType d)
     {
         if(*current->data == d)
         {
-            found = 1;
+            found = true;
             break;
         }
         else
         {
             parent = current;
             
-            if(*d>current->data)
+            if(current->data == &d)
             {
                 current = current->right;
             }
@@ -206,7 +244,7 @@ void BinarySearchTree<itemType>::inOrder(node* i)
     else return;
 }
 template <class itemType>
-itemType* BinarySearchTree<itemType>::_search(node* i ,itemType &key) {
+itemType* BinarySearchTree<itemType>::_search(node* i ,itemType const &key) {
     
     
    	if(i == NULL) return NULL;
@@ -221,6 +259,53 @@ itemType* BinarySearchTree<itemType>::_search(node* i ,itemType &key) {
     
 }
 template <class itemType>
-itemType* BinarySearchTree<itemType>::search(itemType &key) {
+itemType* BinarySearchTree<itemType>::search(itemType const &key) {
     return _search(root, key);
 }
+
+
+template <class itemType>
+int BinarySearchTree<itemType>::Height(node* node){
+    int left, right;
+    
+    if(node==NULL)
+        return false;
+    left = Height(node->left);
+    right = Height(node->right);
+    if(left > right)
+        return left+1;
+    else
+        return right+1;
+}
+
+template <class itemType>
+void BinarySearchTree<itemType>::rotateLeftOnce(node* i){
+    node *otherNode;
+    
+    otherNode = i->left;
+    i->left = otherNode->right;
+    otherNode->right = i;
+    i = otherNode;
+}
+
+template <class itemType>
+void BinarySearchTree<itemType>::rotateLeftTwice(node* i){
+    rotateRightOnce(i->left);
+    rotateLeftOnce(i);
+}
+
+template <class itemType>
+void BinarySearchTree<itemType>::rotateRightOnce(node* i){
+    node * otherNode;
+    otherNode = i->right;
+    i->right = otherNode->left;
+    otherNode->left = i;
+    i = otherNode;
+}
+
+template <class itemType>
+void BinarySearchTree<itemType>::rotateRightTwice(node* i){
+    rotateLeftOnce(i->right);
+    rotateRightOnce(i);
+}
+

@@ -59,27 +59,32 @@ void  person::setCollege( string college) {
 void  person::setRelationship(person *lover){
     //if either one breaks up
     if (lover == NULL) {
+        if(relationship == NULL) return;
+        relationship->setStatus(relationship->getName() + " is now Single");
         relationship->relationship = NULL;
         relationship = NULL;
+        setStatus(name + " is now " + getRelationship());
         return;
     }
     //Case 1, if both are single
     else if(this->relationship == NULL)
     { relationship = lover;
       lover->relationship = this;
-      this->addFriend(*lover);
+      relationship->setStatus(name + " is now " + getRelationship());
     }
     //Case 2, if both are committed to each other
     else if(this->relationship != lover) {
-        relationship->setRelationship(NULL);
+        relationship->setStatus(relationship->getName() + " is now Single");
+        relationship->relationship = NULL;
         relationship = lover;
         lover->setRelationship(this);
+        relationship->setStatus(relationship->getName() + " is now " + getRelationship());
     }
-        
-
+    
+    setStatus(name + " is now " + getRelationship());
 }
 
-void  person::setStatus( string newStatus) {
+void  person::setStatus(string newStatus) {
     string timeNow  = getDate()+newStatus;
     status.push_back(timeNow + "\n");
 }
@@ -112,7 +117,7 @@ void  person::sendMessage(person &friendName,  string message) {
         
     }
     if(found) {
-        string messageName = this->name + "  " + getDate() + message + "\n";
+        string messageName =  getDate() + "\n" + this->name + "  " + message + "\n";
         string firstName = friendName.getName();
         text[firstName].push_back(messageName);
         friendName.receiveMessage(friendName, messageName);
@@ -143,6 +148,7 @@ void  person::addFriend(person &friendName) {
     friends.push_back(&friendName);
     friendName.friends.push_back(this);
     cout << name << " and " << friendName.name << " are now friend " <<  endl;
+    setStatus(name + " and " + friendName.name + " are now friend ");
 }
 
 void  person::deleteFriend(person &friendName) {
@@ -198,6 +204,12 @@ bool  person::getStatus() const {
 }
 
 
+vector<person*>  person::getFriends() const {
+    return friends;
+}
+
+
+
 string  person::getRelationship() const {
     if(relationship == NULL) {
         return "Single";
@@ -205,7 +217,7 @@ string  person::getRelationship() const {
     else
     {
         string relationStatus;
-        relationStatus = "Committed with " + relationship->getName();
+        relationStatus = " in a relationship with " + relationship->getName();
         return relationStatus;
     }
 }
@@ -249,7 +261,7 @@ void person:: printMessages() const {
         typedef map<string, vector<string>>::const_iterator MapIterator;
         for (MapIterator iter = text.begin(); iter != text.end(); iter++)
         {
-            cout << "Key: " << iter->first << endl << "Values:" << endl;
+            cout << iter->first << endl << endl;
             typedef vector<string>::const_iterator ListIterator;
             for (ListIterator list_iter = iter->second.begin(); list_iter != iter->second.end(); list_iter++)
                 cout << " " << *list_iter << endl;

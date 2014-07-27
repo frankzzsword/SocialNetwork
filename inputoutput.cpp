@@ -23,6 +23,7 @@ using namespace std;
 class inputoutput {
     
 public:
+    BinarySearchTree<person> tree;
     person personArray[100];
     int count;
     inputoutput() {
@@ -36,7 +37,6 @@ public:
         string age;
         string city;
         string college;
-        string profilePicture;
         string wasteSpace;
         
         
@@ -50,7 +50,6 @@ public:
             getline(infile, age);
             getline(infile, city);
             getline(infile, college);
-            getline(infile, profilePicture);
             getline(infile, wasteSpace);
             int Age = atoi(age.c_str());
             
@@ -66,41 +65,52 @@ public:
         return count;
     }
     
-    void userMenu(person *personArray, string name, string password) {
+    void addToBST()  {
+        for(int i = 0; i < count; i++) {
+            tree.insert(personArray[i]);
+        }
+        tree.print_inOrder();
+    }
+    
+    void userMenu(string name, string password) {
         
-        
-        bool found = false;
         bool options = true;
+        person *temp;  person *other; person temporary; vector<person *> tempFriends;
         
-        for( int i = 0; i < 12; i++) {
-            
-            //*******IMPORTANT... CHANGE THIS TO SEARCH FROM BST......*********//
-            
-            if(personArray[i].getName() == name && personArray[i].getPwd() == password) {
-                found = true;
-                int status;
-                if(personArray[i].getStatus() != false)
+        temporary.setName(name);
+        temp = tree.search(temporary);
+        if(temp == NULL ){
+            cout << "Incorrect Username and Password";
+            return;
+        }
+        if(temp->getPwd() != password){
+            cout << "Incorrect Username and Password";
+            return;
+        }
+        if(temp->getStatus() != false)
                 {
+                    int status;
                     cout << "Your account is not active" << endl;
                     cout << "Please reactivate your account in order to access it" <<endl;
                     cout << "Press [1] to Reactivate or [2] to Exit" <<endl;
                     cin >> status;
                     if (status == 1)
-                        personArray[i].deactivateAccount(false);
+                        temp->deactivateAccount(false);
                     else
                         return;
                 }
                 while(options == true) {
-                    cout << "-------------"<< personArray[i].getName() << " Profile --------------" << endl;;
+                    cout << endl<< "-------------"<< temp->getName() << " Profile --------------" << endl;;
                     cout << "Choose an option from below" << endl;
                     cout << "1. Add a friend" << endl
                     << "2. Write a new Status Message" << endl
                     << "3. Send a message" << endl
                     << "4. Show your friends" << endl
-                    << "5. Show your status messages" <<endl
-                    << "6. Show your messages " << endl
-                    << "7. Account Settings" << endl
-                    << "8. Logout"  << "[Choose Your Option] : " ;
+                    << "5. Show newsfeed" << endl
+                    << "6. Print your status messages" <<endl
+                    << "7. Print your private messages" << endl
+                    << "8. Account Settings" << endl
+                    << "9. Logout"  << endl << "[Choose Your Option] : " ;
                     
                     int option;
                     string friendName;
@@ -113,20 +123,22 @@ public:
                         case 1 : cout << "Which friend would you like to add" << endl;
                             cin.ignore();
                             getline(cin, friendName);
-                            for(int d = 0; d < 3; d++) {
-                                if (friendName == personArray[d].getName()) {
-                                    personArray[i].addFriend(personArray[d]);
+                            temporary.setName(friendName);
+                            other = tree.search(temporary);
+                            if(other == NULL)
+                            { cout << "Person does not exist in the database";
+                                continue;
+                            } else {
+                                    temp->addFriend(*other);
                                     friendFound = true;
                                 }
-                            }
-                            if(friendFound == false) cout << "Person does not exist in the database";
                             break;
                             
                         case 2 : cout << "What's on your mind?" << endl;
                             cin.ignore();
                             getline(cin, status);
                             cout << " " << endl;
-                            personArray[i].setStatus(status);
+                            temp->setStatus(status);
                             break;
                             
                         case 3 :
@@ -135,26 +147,34 @@ public:
                             getline(cin, friendName);
                             cout << "What message would you like to send : " << endl;
                             getline(cin, message);
-                            for(int d = 0; d < 3; d++) {
-                                if (friendName == personArray[d].getName())
-                                    personArray[i].sendMessage(personArray[d], message);
+                            temporary.setName(friendName);
+                            other = tree.search(temporary);
+                            if(other == NULL)
+                            { cout << "Person does not exist in the database";
+                                break;
                             }
+                            else
+                                temp->sendMessage(*other, message);
                             break;
                         case 4 :
-                            personArray[i].printFriends();
+                            temp->printFriends();
                             break;
-                            
                         case 5 :
-                            personArray[i].printStatus();
+                            tempFriends = temp->getFriends();
+                            for(int i = 0; i < tempFriends.size(); i++) {
+                                tempFriends[i]->printStatus();
+                            }
                             break;
                         case 6 :
-                            personArray[i].printMessages();
-                            
+                             temp->printStatus();
                             break;
-                        case 7:
-                            userAdminMenu(personArray[i]);
+                        case 7 :
+                            temp->printMessages();
                             break;
-                        case 8 :
+                        case 8:
+                            userAdminMenu(*temp);
+                            break;
+                        case 9 :
                             options = false;
                             break;
                         default:
@@ -165,18 +185,18 @@ public:
                     cin>> pressKey;
                     
                 }
-            }
-        }
+        
+        
         if(options == false){
             cout << "You've been logged out." << endl;
             return;
         }
-        if(found == false) {
-            cout << "incorrect username or password" << endl;
-        }
+        
     }
     
     void userAdminMenu(person &personName) {
+        person temporary;
+        person *other;
         bool options = true;
         while( options == true ) {
             int option;
@@ -199,7 +219,7 @@ public:
                     personName.setPassword(temp);
                     cout << "Your Password has been changed";
                     break;
-                case 2 :
+                case 2 ://IT DOENST WORK.. SEE WHATS WRONG
                     cout << "New City : ";
                     cin>>temp;
                     personName.setCity(temp);
@@ -214,11 +234,31 @@ public:
                 case 4:
                     cout << "Enter the name of the friend you want to Delete : ";
                     cin.ignore();
-                    getline(cin, temp);//find through binary search tree or hash
+                    getline(cin, temp);
+                    temporary.setName(temp);
+                    other = tree.search(temporary);
+                    if(other == NULL)
+                    { cout << "The person does not exist in the database.";
+                        break;
+                    }
+                    personName.deleteFriend(*other);
                     break;
                 case 5 :
                     cout << "Who are you in relationship with (write name or type 'none') : " << endl;
-                    //personName.setRelationship() //find through binary search tree or hash
+                    cin.ignore();
+                    getline(cin, temp);
+                    temporary.setName(temp);
+                    other = tree.search(temporary);
+                    
+                    if(temp != "none"){
+                        if(other == NULL)
+                        { cout << "The person does not exist in the database.";
+                            break;
+                        }
+                        personName.setRelationship(other);}
+                    else
+                        
+                        personName.setRelationship(NULL);
                     break;
                 case 6 :
                     cout << "Are you sure you want to deactivate your account?" <<endl
@@ -246,6 +286,9 @@ public:
     
     
     void adminMenu(inputoutput &obj, string password) {
+        person *temp; person temporary; string name;
+        
+        
         if (password != "vno")
         {
             cout << "incorrect username or password";
@@ -274,6 +317,11 @@ public:
                     
                     break;
                 case 2 :
+                    cout << "Name of the person to be deleted : " <<endl;
+                    cin.ignore();
+                    getline(cin, name);
+                    temporary.setName(name);
+                    tree.remove(temporary);
                     
                     break;
                     
@@ -285,7 +333,7 @@ public:
                     break;
                     
                 case 5 :
-                    //  tree.print_inOrder();
+                    tree.print_inOrder();
                     break;
                     
                 case 6:

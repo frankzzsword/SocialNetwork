@@ -1,311 +1,37 @@
-/*************************************************Binary Search Tree******************************************************/
-
+#ifndef BINARYSEARCHTREE
+#define BINARYSEARCHTREE
 #include <iostream>
-#include "BinarySearchTree.h"
+#include "person.h"
+
 using namespace std;
 
-
 template <class itemType>
-void BinarySearchTree<itemType>::insert(itemType &d)
+class BinarySearchTree
 {
-    node* n = new node;
-    node* parent = NULL;
-    n->data = &d;
-    n->left = n->right = NULL;
     
-    //if BST is empty, assign a new node as root
-    if(isEmpty()) root = n;
-    else
-    {
-        node* current = root;
-        while(current)
-        {
-            parent = current;
-            //if data in new node is greater than data in current node, assign data on right of current node as current
-            if(*n->data > *current->data)
-            {
-               
-                current = current->right;
-                          }
-            
-            else
-            {
-                //otherwise, assign data on left of current node as current
-                               current = current->left;
-                
-            }
-        }
+    struct node {
+    itemType *data;
+    node* left;
+    node* right;
+    };
+    node *root;
         
-        //if data in new node is less than data in parent node, assign new node as left of parent
-        if(*n->data < *parent->data)
-        {
-            parent->left = n;
-        }
-        
-        //otherwise assign new node as right of parent (if it is not less than, than it is greater than or equal to)
-        else
-        {
-            parent->right = n;
-        }
-    }
-}
-//
-//template <class itemType>
-//typename BinarySearchTree<itemType>::node* BinarySearchTree<itemType>::insert(node* i, itemType &d_IN){
-//    if(i == NULL)  // (1) If we are at the end of the tree place the value
-//    {
-//        node* n = new node;
-//        n->data = &d_IN;
-//        n->left = n->right = NULL;
-//        i = n;
-//    }
-//    else if(d_IN < *i->data){  //(2) otherwise go left if smaller
-//        insert(i->left, d_IN);
-//        if(Height(i->left) - Height(i->right) == 2){
-//            if(d_IN < *i->left->data)
-//                rotateLeftOnce(i);
-//            else
-//                rotateLeftTwice(i);
-//        }
-//    }
-//    else if(d_IN > *i->data){ // (3) otherwise go right if bigger
-//        insert(i->right, d_IN);
-//        if(Height(i->right) - Height(i->left) == 2){
-//            if(d_IN > *i->right->data)
-//                rotateRightOnce(i);
-//            else
-//                rotateRightTwice(i);
-//        }
-//    }
-//    return i;
-//}
-//
-//template <class itemType>
-//void BinarySearchTree<itemType>::insert(itemType &data){
-// 
-//    insert(root, data);
-//}
+  public:
+    BinarySearchTree() {root = NULL;}
 
-template <class itemType>
-void BinarySearchTree<itemType>::remove(itemType &d)
-{
-    node* current = root;
-    node* parent;
-    bool found = 0;
+    bool isEmpty() const {return root == NULL;} //checks if BST is empty
+    typename BinarySearchTree<itemType>::node* _insert(node*&, itemType &);
+    void insert(itemType &);
+    void remove(itemType &data); //removes an item from the BST
+    void inOrder(node*); //calculates the in-order traversal
+    void print_inOrder(); //prints the in-order traversal
+    itemType* _search(node*   ,itemType const &d);
+    itemType* search(itemType const &d);
+    int Height(node*);
+    void rotateLeftOnce(node*&);
+    void rotateLeftTwice(node*&);
+    void rotateRightOnce(node*&);
+    void rotateRightTwice(node*&);
     
-    if(isEmpty())
-    {
-        cout<<"BST is empty"<<endl;
-        return;
-    }
-    
-    
-    while(current != NULL)
-    {
-        if(*current->data == d)
-        {
-            found = true;
-            break;
-        }
-        else
-        {
-            parent = current;
-            
-            if(current->data == &d)
-            {
-                current = current->right;
-            }
-            
-            else
-            {
-                current = current->left;
-            }
-        }
-    }
-    if(!found)
-    {
-        cout<<"data is not found"<<endl;
-        return;
-    }
-    
-    //Node with no children (leaf node, both sides are null)
-    if(current->left == NULL && current->right == NULL)
-    {
-        if(parent->left == current)
-        {
-            parent->left = NULL;
-        }
-        
-        else
-        {
-            parent->right = NULL;
-        }
-        
-        delete current;
-        return;
-    }
-    
-    //Node with a single child (one of the sides of a node is null and the other is not)
-    if((current->left == NULL && current->right != NULL) || (current->left != NULL && current->right == NULL))
-    {
-        if(current->left == NULL && current->right != NULL)
-        {
-            if(parent->left == current)
-            {
-                parent->left = current->right;
-                delete current;
-            }
-            else
-            {
-                parent->right = current->right;
-                delete current;
-            }
-        }
-        else
-        {
-            if(parent->left == current)
-            {
-                parent->left = current->left;
-                delete current;
-            }
-            else
-            {
-                parent->right = current->left;
-                delete current;
-            }
-        }
-        return;
-    }
-    
-    //Node with 2 children (both sides are not equal to null)
-    if (current->left != NULL && current->right != NULL)
-    {
-        node* checker;
-        checker = current->right;
-        if((checker->left == NULL) && (checker->right == NULL))
-        {
-            current = checker;
-            delete checker;
-            current->right = NULL;
-        }
-        else
-        {
-            if((current->right)->left != NULL)
-            {
-                node* leftCurrent;
-                node* leftCurrentPred;
-                leftCurrentPred = current->right;
-                leftCurrent = (current->right)->left;
-                while(leftCurrent->left != NULL)
-                {
-                    leftCurrentPred = leftCurrent;
-                    leftCurrent = leftCurrent->left;
-                }
-                *current->data = *leftCurrent->data;
-                delete leftCurrent;
-                leftCurrentPred->left = NULL;
-            }
-            else
-            {
-                node* input1;
-                input1 = current->right;
-                *current->data = *input1->data;
-                current->right = input1->right;
-                delete input1;
-            }
-        }
-        return;
-    }
-}
-
-template <class itemType>
-void BinarySearchTree<itemType>::print_inOrder()
-{
-    cout << "****** PRINTING BINARY SEARCH TREE *******" << endl;
-    inOrder(root);
-}
-
-template <class itemType>
-void BinarySearchTree<itemType>::inOrder(node* i)
-{
-    if(i != NULL)
-    {
-        if(i->left)
-        {
-            inOrder(i->left);
-        }
-        cout<< *i->data;
-        
-        if(i->right)
-        {
-            inOrder(i->right);
-        }
-    }
-    else return;
-}
-template <class itemType>
-itemType* BinarySearchTree<itemType>::_search(node* i ,itemType const &key) {
-    
-    
-   	if(i == NULL) return NULL;
-    
-    if(*i->data == key) return i->data;
-    else {
-        if(*i->data < key)
-            return _search(i->right, key) ;
-        else
-            return _search(i->left, key);
-    }
-    
-}
-template <class itemType>
-itemType* BinarySearchTree<itemType>::search(itemType const &key) {
-    return _search(root, key);
-}
-
-
-template <class itemType>
-int BinarySearchTree<itemType>::Height(node* node){
-    int left, right;
-    
-    if(node==NULL)
-        return false;
-    left = Height(node->left);
-    right = Height(node->right);
-    if(left > right)
-        return left+1;
-    else
-        return right+1;
-}
-
-template <class itemType>
-void BinarySearchTree<itemType>::rotateLeftOnce(node* i){
-    node *otherNode;
-    
-    otherNode = i->left;
-    i->left = otherNode->right;
-    otherNode->right = i;
-    i = otherNode;
-}
-
-template <class itemType>
-void BinarySearchTree<itemType>::rotateLeftTwice(node* i){
-    rotateRightOnce(i->left);
-    rotateLeftOnce(i);
-}
-
-template <class itemType>
-void BinarySearchTree<itemType>::rotateRightOnce(node* i){
-    node * otherNode;
-    otherNode = i->right;
-    i->right = otherNode->left;
-    otherNode->left = i;
-    i = otherNode;
-}
-
-template <class itemType>
-void BinarySearchTree<itemType>::rotateRightTwice(node* i){
-    rotateLeftOnce(i->right);
-    rotateRightOnce(i);
-}
-
+};
+#endif

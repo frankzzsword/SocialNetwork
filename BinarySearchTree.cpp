@@ -68,7 +68,7 @@ void BinarySearchTree<itemType>::remove(itemType &d)
         {
             parent = current;
             
-            if(current->data == &d)
+            if(*current->data < d)
             {
                 current = current->right;
             }
@@ -174,6 +174,66 @@ void BinarySearchTree<itemType>::remove(itemType &d)
         return;
     }
 }
+//template<class itemType>
+//typename BinarySearchTree<itemType>::node* BinarySearchTree<itemType>::_remove(node* root, itemType &elem) {
+//    node* save;
+//    if(root == NULL) {
+//        printf("Element not in the tree !\n");
+//        return 0 ;
+//    }
+//    if(*root->data == elem) {
+//        if(root->right == NULL && root->left == NULL) {                  // no child
+//            free(root);
+//            return NULL;
+//        }
+//        else if(root->right == NULL || root->left == NULL) {             // one child
+//            if(root->right == NULL) {
+//                save = root->right;
+//                free(root);
+//                return save;
+//            }
+//            else {
+//                save = root->right;
+//                free(root);
+//                return save;
+//            }
+//        }
+//        else {                                                             // two children
+//            save = findPred(root->right);
+//            root->data = save->data;
+//            root->right = _remove(root->left, *root->data);
+//            return root;
+//        }
+//    }
+//    else if(*root->data < elem) {
+//        root->right = _remove(root->right, elem);
+//    }
+//    else if(*root->data > elem) {
+//        root->left = _remove(root->left, elem);
+//    }
+//    return root;
+//}
+//
+//template <class itemType>
+//typename BinarySearchTree<itemType>::node* BinarySearchTree<itemType>::findPred(node* root) {
+//    static node* pred;
+//    if(root == NULL) {
+//        return pred;
+//    }
+//    else {
+//        pred = root;
+//        return findPred(root->right);
+//    }
+//}
+
+//
+//
+//template <class itemType>
+//void BinarySearchTree<itemType>::remove(itemType &data){
+//    
+//    _remove(root, data);
+//}
+//
 
 template <class itemType>
 void BinarySearchTree<itemType>::print_inOrder()
@@ -202,6 +262,32 @@ void BinarySearchTree<itemType>::inOrder(node* i)
     }
     else return;
 }
+
+template <class itemType>
+void BinarySearchTree<itemType>::printIndent()
+{
+    cout << "****** PRINTING BINARY SEARCH TREE *******" << endl;
+    indented( root, 0 );
+}
+
+template <class itemType>
+void BinarySearchTree<itemType>::indented ( node* tp, int spaces )
+{
+    int i;
+    if( tp != NULL )
+    {
+        indented( tp->right, spaces + 13 );
+        for( i = 0; i < spaces; i++ )
+            cout <<' ';
+        person *ptr = tp->data;
+        cout << ptr->getName() << endl;
+        indented( tp->left, spaces + 13);
+    }
+}
+
+
+//  Somewhere else in the program...:
+
 template <class itemType>
 itemType* BinarySearchTree<itemType>::_search(node* i ,itemType const &key) {
     

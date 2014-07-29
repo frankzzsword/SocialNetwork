@@ -2,21 +2,22 @@
 //  inputoutput.cpp
 //  socialNetwork
 //
-//  Created by Varun Mishra on 7/15/14.
+//  Created by Varun Mishra on 7/15/14.w
 //  Copyright (c) 2014 Varun Mishra. All rights reserved.
 //
 #include <stdio.h>
 #include <iostream>
 #include <iomanip>
 #include <cstdio>
-#include "person.h"
 #include <cstdlib>
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <vector>
+#include "person.h"
 #include "BinarySearchTree.h"
 #include "BinarySearchTree.cpp"
+#include "hashing.h"
 
 using namespace std;
 
@@ -55,22 +56,13 @@ public:
             
             person tempPerson(name, password, gender, Age, city, college);
             personArray[count] = tempPerson;
+            tree.insert(personArray[count]);
             count++;
             
             
         }
     }
-    
-    int countLines() const{
-        return count;
-    }
-    
-    void addToBST()  {
-        for(int i = 0; i < count; i++) {
-            tree.insert(personArray[i]);
-        }
-        tree.print_inOrder();
-    }
+ 
     
     void userMenu(string name, string password) {
         
@@ -286,6 +278,10 @@ public:
     
     
     void adminMenu(inputoutput &obj, string password) {
+        hashing hashfunc(count);
+        for (int i = 0 ; i < count ; i++ ) {
+            hashfunc.addObject(personArray[i]);
+        }
         person *temp; person temporary; string name;
         
         
@@ -313,16 +309,15 @@ public:
             cin >> option;
             
             switch(option) {
-                case 1 :
-                    
+                case 1:
                     break;
-                case 2 :
+                case 2:
                     cout << "Name of the person to be deleted : " <<endl;
                     cin.ignore();
                     getline(cin, name);
                     temporary.setName(name);
                     tree.remove(temporary);
-                    
+                    hashfunc.removeObject(temporary);
                     break;
                     
                 case 3 :
@@ -330,6 +325,7 @@ public:
                     break;
                     
                 case 4 :
+                    hashfunc.PrintTable();
                     break;
                     
                 case 5 :
@@ -337,7 +333,7 @@ public:
                     break;
                     
                 case 6:
-                    
+                    tree.printIndent();
                     break;
                     
                 case 7 :

@@ -32,6 +32,7 @@ private:
     //string is name of the friend and the vectors are for the messages
     map<string, vector<string> > text;
     bool deactivate;
+    bool admin;
     person *next;
     
 public:
@@ -62,6 +63,8 @@ public:
     string getRelationship() const;
     bool getStatus() const;
     string getDate();
+    vector<person *>  getFriends() const;
+
 
     
     //PRINT METHODS
@@ -75,14 +78,16 @@ public:
     {
         return name < otherObject.getName();
     }
+
     bool operator > (const person &otherObject)
     {
         return name > otherObject.getName();
     }
+
     
     bool operator == (const person &otherObject) {
         
-        return name == otherObject.getName();
+        return this->name == otherObject.getName();
     }
     
     bool operator != (const person &otherObject) {

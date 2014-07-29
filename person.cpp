@@ -32,6 +32,7 @@ private:
     //string is name of the friend and the vectors are for the messages
     map<string, vector<string> > text;
     bool deactivate;
+    bool admin;
     person *next;
     
 public:

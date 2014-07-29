@@ -10,8 +10,10 @@ hashing::hashing(int size)
     size = size *2;
     getPrime(size);
     tableSize = size;
-    cout << " table size : " << tableSize << "END";
     HashTable = new item*[tableSize];
+	for(int i=0; i<tableSize; i++){
+		HashTable[i] = NULL;
+	}
 }
 
 /**************************** Hash ***************************************/
@@ -29,6 +31,13 @@ int hashing::Hash(string key)
     }
     
     index = hash % tableSize;
+	// DEBUG
+	/*cout << endl;
+	cout << "[tableSize] : " << tableSize << endl;
+	cout << "[hash] : " << hash << endl;
+	cout << "[NAME] : " << key << endl;
+	cout << "[INDEX] : " << index << endl;*/
+
     return index;
     
 }
@@ -37,24 +46,32 @@ int hashing::Hash(string key)
 void hashing::addObject(person &personObj)
 {
     
-    
     int index = Hash(personObj.getName());
     
+	cout << personObj.getName() << ": [" << index << "]\n" ;
+
     if(HashTable[index] == NULL)
     {
         HashTable[index] = new item;
         HashTable[index]->hashedPerson = &personObj;
         HashTable[index]->next =0;
+		cout << personObj.getName() << " is added!\n";
     }
     
     else
-    {   item* n = new item;
-        n->hashedPerson = &personObj;
-        HashTable[index] = n;
-        HashTable[index]->hashedPerson = &
-        n->next = Ptr;
-        Ptr->next = n;
-    }
+    {   
+		item* Ptr = new item;
+		Ptr->hashedPerson = HashTable[index]->hashedPerson;
+		Ptr->next = HashTable[index]->next;
+		HashTable[index]->hashedPerson = &personObj;
+		HashTable[index]->next = Ptr;
+		cout << personObj.getName() << " is added!" << endl;
+		
+	}
+
+	//cout << "People in this index[" << Hash(personObj.getName()) << "] :" << hashing::NumberOfItemsInIndex(Hash(personObj.getName())) << endl;
+	
+    
 }
 
 /**************************** NumberOfItemsInIndex **********************************/
@@ -63,18 +80,17 @@ int hashing::NumberOfItemsInIndex(int index)
 {
     int count = 0;
     
-    if(HashTable[index]->hashedPerson.getName() == "empty")
+    if(HashTable[index] ==  NULL)
     {
         return count;
     }
     else
     {
-        count++;
         item* Ptr = HashTable[index];
-        while(Ptr->next != 0)
+        while(Ptr != 0)
         {
             count++;
-            Ptr = Ptr->next;
+            Ptr = Ptr->next; 
         }
     }
     return count;
@@ -88,13 +104,13 @@ void hashing::PrintTable()
     int number;
     for(int i = 0; i < tableSize; i++)
     {
-        if(HashTable[i]->hashedPerson.getName() != "empty")
+        if(HashTable[i] != NULL)
         {
             number = NumberOfItemsInIndex(i);
             cout << "Index = " << i <<endl;
             cout << "There are " << number << " people in this bucket.\n";
             item* Ptr = HashTable[i];
-            while( Ptr != 0)
+            while( Ptr != NULL)
             {
                 cout << Ptr->hashedPerson << endl;
                 Ptr = Ptr->next;
@@ -106,8 +122,9 @@ void hashing::PrintTable()
     
 }
 
-/************************** removeObject *****************************/
-void hashing::removeObject(person &personObj) // remove the object from hash table
+/************************** removeObject ****************************/
+// remove the object from hash table
+void hashing::removeObject(person &personObj) 
 {
     int index = Hash(personObj.getName());
     
@@ -116,24 +133,19 @@ void hashing::removeObject(person &personObj) // remove the object from hash tab
     item* p2;
     
     //case 0: bucket is empty
-    if(HashTable[index]->hashedPerson.getName() == "empty")
+    if(HashTable[index] == NULL)
         cout << "Person not found in the hash table!\n";
     
     //case 1: only 1 item contained in bucket and that item has matching name
-    else if( HashTable[index]->hashedPerson.getName() == personObj.getName() && HashTable[index]->next == 0)
+    else if( HashTable[index]->hashedPerson == &personObj && HashTable[index]->next == 0)
     {
-        HashTable[index]->hashedPerson.setName("empty");
-        HashTable[index]->hashedPerson.setPassword("empty");
-        HashTable[index]->hashedPerson.setGender("empty");
-        HashTable[index]->hashedPerson.setAge(0);
-        HashTable[index]->hashedPerson.setCity("empty");
-        HashTable[index]->hashedPerson.setCollege("empty");
+        HashTable[index] = NULL;
         cout << personObj.getName() << " is removed from the hash table!\n";
     }
     
     
     //case 2: match is located in the first item in the bucket but there are more items in the bucket
-    else if(HashTable[index]->hashedPerson.getName() == personObj.getName())
+    else if(HashTable[index]->hashedPerson == &personObj)
     {
         delPtr = HashTable[index];
         HashTable[index] = HashTable[index]->next;
@@ -147,7 +159,7 @@ void hashing::removeObject(person &personObj) // remove the object from hash tab
         p1 = HashTable[index]->next;
         p2 = HashTable[index];
         
-        while(p1 != 0 && p1->hashedPerson.getName() != personObj.getName())
+        while(p1 != 0 && p1->hashedPerson != &personObj)
         {
             p2 = p1;
             p1 = p1->next;

@@ -16,12 +16,14 @@ In Hash (Boya)
   ❌ Put the statistics out (Number of Collision, Largest Collision Chain, Load Factor, Number of elements)
   ❌ Search function
   ❌ Load Factor
-  ❌ Resize Array if Load Factor is more than 50%
+  ❌ (Danny   Resize Array if Load Factor is more than 50%
   ❌ Make a Destructor for Hash (free memory)
+  
   
   
 In  IO ( Hsei)
   ❌ Write out to the file
+  ❌  (Danny) Make Menu prettier and more structrual  
   ✅  Admin menu
               ************** MENU ************
                 *                              *
@@ -49,13 +51,6 @@ Main function  ( Varun )
       
       
 Person Class ( Varun )
+    ❌  Sign up User 
     ❌ add a destructor 
     ❌ delete vectors and arrays
-    
-    
-OTHER IDEAS:
-**************************************************************************************************
-❌ SIGN UP..
-
-So when we start the app, we get an option to login, create a new user account and quit, if we create a user account 
-it works exactly the same way as we will do in the admin menu while creating a new person.

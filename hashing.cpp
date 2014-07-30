@@ -10,6 +10,7 @@ hashing::hashing(int size)
     size = size *2;
     getPrime(size);
     tableSize = size;
+	numberofentries =0;
     HashTable = new item*[tableSize];
 	for(int i=0; i<tableSize; i++){
 		HashTable[i] = NULL;
@@ -68,6 +69,8 @@ void hashing::addObject(person &personObj)
 		cout << personObj.getName() << " is added!" << endl;
 		
 	}
+	    addentry();//added
+
 
 	//cout << "People in this index[" << Hash(personObj.getName()) << "] :" << hashing::NumberOfItemsInIndex(Hash(personObj.getName())) << endl;
 	
@@ -102,24 +105,40 @@ void hashing::PrintTable()
 {
     cout << "****** PRINTING HASH TABLE *******" << endl;
     int number;
+	int largestbucket =0;
+	int numberofcollisions =0;
     for(int i = 0; i < tableSize; i++)
     {
         if(HashTable[i] != NULL)
         {
-            number = NumberOfItemsInIndex(i);
+
+			number = NumberOfItemsInIndex(i);
             cout << "Index = " << i <<endl;
             cout << "There are " << number << " people in this bucket.\n";
+			if(number > largestbucket)
+			{
+				largestbucket = number;
+			}
+			if(number > 1)
+			{
+				numberofcollisions = numberofcollisions+number;
+			}
             item* Ptr = HashTable[i];
+			
             while( Ptr != NULL)
             {
-                cout << Ptr->hashedPerson << endl;
+                cout << *Ptr->hashedPerson << endl;
                 Ptr = Ptr->next;
             }
             
         }
-        
+	
+
     }
-    
+    	cout << "The largest collision chain is " << largestbucket << endl;
+		cout << "Number of collisions = " << numberofcollisions <<endl;
+        cout << "Number of elements = " << numberofentries << endl;
+		cout << "Loading factor = " << getLoadingfactor() << endl;
 }
 
 /************************** removeObject ****************************/
@@ -131,7 +150,7 @@ void hashing::removeObject(person &personObj)
     item* delPtr;
     item* p1;
     item* p2;
-    
+    cout << "Asdfasdfasdfads " << index <<endl;
     //case 0: bucket is empty
     if(HashTable[index] == NULL)
         cout << "Person not found in the hash table!\n";
@@ -180,6 +199,7 @@ void hashing::removeObject(person &personObj)
             cout << personObj.getName() << " is removed from the hash table!\n";
         }
     }
+	deleteentry();
 }
 
 /**************************Get Prime**************************/

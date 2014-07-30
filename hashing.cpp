@@ -34,11 +34,11 @@ int hashing::Hash(string key)
     index = hash % tableSize;
 	// DEBUG
 	/*cout << endl;
-	cout << "[tableSize] : " << tableSize << endl;
-	cout << "[hash] : " << hash << endl;
-	cout << "[NAME] : " << key << endl;
-	cout << "[INDEX] : " << index << endl;*/
-
+     cout << "[tableSize] : " << tableSize << endl;
+     cout << "[hash] : " << hash << endl;
+     cout << "[NAME] : " << key << endl;
+     cout << "[INDEX] : " << index << endl;*/
+    
     return index;
     
 }
@@ -46,11 +46,12 @@ int hashing::Hash(string key)
 /**************************** addObject **********************************/
 void hashing::addObject(person &personObj)
 {
-    
+
+    int tempCollision = 0;
     int index = Hash(personObj.getName());
     
 	cout << personObj.getName() << ": [" << index << "]\n" ;
-
+    
     if(HashTable[index] == NULL)
     {
         HashTable[index] = new item;
@@ -60,21 +61,25 @@ void hashing::addObject(person &personObj)
     }
     
     else
-    {   
+    {
 		item* Ptr = new item;
 		Ptr->hashedPerson = HashTable[index]->hashedPerson;
 		Ptr->next = HashTable[index]->next;
 		HashTable[index]->hashedPerson = &personObj;
 		HashTable[index]->next = Ptr;
 		cout << personObj.getName() << " is added!" << endl;
-		
+        numberofcollisions++;
 	}
-	    addentry();//added
-
-
-	//cout << "People in this index[" << Hash(personObj.getName()) << "] :" << hashing::NumberOfItemsInIndex(Hash(personObj.getName())) << endl;
-	
     
+    numberofentries++;
+
+    
+	//cout << "People in this index[" << Hash(personObj.getName()) << "] :" << hashing::NumberOfItemsInIndex(Hash(personObj.getName())) << endl;
+    
+    if(getLoadingfactor() > 0.75) {
+        reHash();
+    }
+	
 }
 
 /**************************** NumberOfItemsInIndex **********************************/
@@ -93,7 +98,7 @@ int hashing::NumberOfItemsInIndex(int index)
         while(Ptr != 0)
         {
             count++;
-            Ptr = Ptr->next; 
+            Ptr = Ptr->next;
         }
     }
     return count;
@@ -103,26 +108,17 @@ int hashing::NumberOfItemsInIndex(int index)
 //Print information in hash table
 void hashing::PrintTable()
 {
+    
     cout << "****** PRINTING HASH TABLE *******" << endl;
-    int number;
-	int largestbucket =0;
-	int numberofcollisions =0;
+    int number = 0;
     for(int i = 0; i < tableSize; i++)
     {
         if(HashTable[i] != NULL)
         {
-
+            
 			number = NumberOfItemsInIndex(i);
             cout << "Index = " << i <<endl;
             cout << "There are " << number << " people in this bucket.\n";
-			if(number > largestbucket)
-			{
-				largestbucket = number;
-			}
-			if(number > 1)
-			{
-				numberofcollisions = numberofcollisions+number;
-			}
             item* Ptr = HashTable[i];
 			
             while( Ptr != NULL)
@@ -132,25 +128,24 @@ void hashing::PrintTable()
             }
             
         }
-	
-
+        
+        
     }
-    	cout << "The largest collision chain is " << largestbucket << endl;
-		cout << "Number of collisions = " << numberofcollisions <<endl;
-        cout << "Number of elements = " << numberofentries << endl;
-		cout << "Loading factor = " << getLoadingfactor() << endl;
+    cout << "The largest collision chain is " << largestbucket << endl;
+    cout << "Number of collisions = " << numberofcollisions <<endl;
+    cout << "Number of elements = " << numberofentries << endl;
+    cout << "Loading factor = " << getLoadingfactor() << endl;
 }
 
 /************************** removeObject ****************************/
 // remove the object from hash table
-void hashing::removeObject(person &personObj) 
+void hashing::removeObject(person &personObj)
 {
     int index = Hash(personObj.getName());
     
     item* delPtr;
     item* p1;
     item* p2;
-    cout << "Asdfasdfasdfads " << index <<endl;
     //case 0: bucket is empty
     if(HashTable[index] == NULL)
         cout << "Person not found in the hash table!\n";
@@ -159,7 +154,7 @@ void hashing::removeObject(person &personObj)
     else if( HashTable[index]->hashedPerson == &personObj && HashTable[index]->next == 0)
     {
         HashTable[index] = NULL;
-        cout << personObj.getName() << " is removed from the hash table!\n";
+        cout << personObj.getName() << " item not found!\n";
     }
     
     
@@ -171,6 +166,7 @@ void hashing::removeObject(person &personObj)
         delete delPtr;
         delPtr = 0;
         cout << personObj.getName() << " is removed from the hash table!\n";
+        numberofentries--;
     }
     //case 3: bucket contains items but first item is not a match
     else
@@ -197,9 +193,9 @@ void hashing::removeObject(person &personObj)
             delete delPtr;
             delPtr = 0;
             cout << personObj.getName() << " is removed from the hash table!\n";
+            numberofentries--;
         }
     }
-	deleteentry();
 }
 
 /**************************Get Prime**************************/
@@ -218,4 +214,51 @@ void hashing::getPrime(int &num) {
             break;
         }
     }
+}
+/**************************ReHash**************************/
+
+void hashing::reHash() {
+    int newSize = tableSize * 2;
+    getPrime(newSize);
+    cout << "Old Table Size = " << tableSize << endl;
+    cout << "New Table Size = " << newSize << endl;
+
+    item* newArr = new item[newSize];
+    int count = 0;
+    for(int i = 0; i < tableSize; i++)
+    {
+        if(HashTable[i] != NULL)
+        {
+            item* Ptr = HashTable[i];
+            while( Ptr != NULL)
+            {
+                cout <<"Adding to temp Array" << endl;
+                cout << *Ptr->hashedPerson;
+                newArr[count] = *Ptr;
+                count++;
+                Ptr = Ptr->next;
+            }
+        }
+    }
+    delete [] HashTable;
+    tableSize = newSize;
+    HashTable = new item*[tableSize];
+    numberofentries = 0;
+    for(int i=0; i<tableSize; i++){
+		HashTable[i] = NULL;
+	}
+
+
+    
+    for(int i = 0; i < count; i++)
+    {
+        
+                cout <<"Adding to new  Hashed Array" << endl;
+                cout << *newArr[i].hashedPerson;
+                addObject(*newArr[i].hashedPerson);
+        
+        }
+    
+
+    delete[] newArr;
 }

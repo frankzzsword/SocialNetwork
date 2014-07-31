@@ -41,6 +41,7 @@ public:
     int getNumberofentries(){return numberofentries;}
     int getTablesize(){ return tableSize;}
     void reHash();
+	int getNumberofcollisions(){return numberofcollisions;}
     //person getHashtable(int i){return **HashTable;}
     
 };

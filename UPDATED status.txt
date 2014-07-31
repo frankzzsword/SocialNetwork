@@ -9,14 +9,15 @@ In BST  (Varun, Andrew)
   ✅ Binary Search (Will use this for user login)
   ✅  Pinting Trees in Binary Form
   ❌ Make a Destructor for BST  (free memory)
+  remove function
    
   
 In Hash (Boya, Danny)
   ✅ Choose a prime Number for tableSize (DONE)
-  ❌ Put the statistics out (Number of Collision, Largest Collision Chain, Load Factor, Number of elements)
+  ✅  Put the statistics out (Number of Collision, Largest Collision Chain, Load Factor, Number of elements)
   ❌ Search function
-  ❌ Load Factor
-  ❌ (Danny   Resize Array if Load Factor is more than 50%
+ ✅  Load Factor
+ ✅  (Danny   Resize Array if Load Factor is more than 50%
   ❌ Make a Destructor for Hash (free memory)
   
   
@@ -27,10 +28,10 @@ In  IO ( Hsei)
   ✅  Admin menu ( Varun)
               ************** MENU ************
                 *                            *
-                * ❌  A - Add a Person       *
-                * ❌   D - Delete Person     *
-                * ❌   S - Search by Name    * 
-                * ❌   P - Print by Hash     *
+                * ✅  A - Add a Person       *
+                * ✅    D - Delete Person     *
+                * ✅    S - Search by Name    * 
+                * ✅    P - Print by Hash     *
                 * ✅   T - Print by Tree     *
                 * ✅   I - Print Indented    *
                 * ❌   W - Write to File     * 
@@ -44,9 +45,9 @@ In  IO ( Hsei)
      * and admin userMenu (change Name, change password, change city, change college);
   
 Main function  ( Varun )
-  ❌ Take the elements from the hash table, put them in the binary search tree
-  ❌ Insert Manager (Inserts in Hash Table and BST)
-  ❌ Delete Manger (Deletes from Hash Table and BST)
+  ✅  Take the elements from the hash table, put them in the binary search tree
+  ✅  Insert Manager (Inserts in Hash Table and BST)
+  ✅  Delete Manger (Deletes from Hash Table and BST)
   ❌ Putting everything together
       
       

@@ -7,6 +7,8 @@ using namespace std;
 //Default constructor
 hashing::hashing(int size)
 {
+	numberofcollisions =0;
+	largestbucket =0;
     size = size *2;
     getPrime(size);
     tableSize = size;
@@ -68,7 +70,9 @@ void hashing::addObject(person &personObj)
 		HashTable[index]->hashedPerson = &personObj;
 		HashTable[index]->next = Ptr;
 		cout << personObj.getName() << " is added!" << endl;
-        numberofcollisions++;
+		
+        numberofcollisions = numberofcollisions +1;
+		cout << numberofcollisions << endl;
 	}
     
     numberofentries++;
@@ -101,6 +105,10 @@ int hashing::NumberOfItemsInIndex(int index)
             Ptr = Ptr->next;
         }
     }
+	if(count > largestbucket)
+	{
+		largestbucket = count;
+	}
     return count;
 }
 
@@ -132,7 +140,7 @@ void hashing::PrintTable()
         
     }
     cout << "The largest collision chain is " << largestbucket << endl;
-    cout << "Number of collisions = " << numberofcollisions <<endl;
+    cout << "Number of collisions = " << getNumberofcollisions() <<endl;
     cout << "Number of elements = " << numberofentries << endl;
     cout << "Loading factor = " << getLoadingfactor() << endl;
 }

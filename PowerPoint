@@ -1,0 +1,40 @@
+Overloaded operators: 
+In person class, we use it for comparisons of objects, and we use “name” as the key in BST and Hash. 
+
+1. Social network app
+cool features: profile, add friends (works like graphs, everyone is mapped to everyone else), send messages, write status messages, see news feed (collection of all the status messages from friends into one single page, i.e. Facebook), change relationship status, time stamp on every update, delete friends
+
+relationship: mutual changes, if one person becomes single, the other person becomes single. if one person gets into relationship with another person, the ex becomes single.
+
+user account: password, every person object created is a user account, ability to change password and use it when you log in again
+2 kinds of interfaces: user, user admin. In user admin, you can change properties (example: password, age, city, relationship)
+
+admin: ability to create a new person, search person by name, delete a person, print Hash Table, print BST, write to file, indented tree, log out
+______________________________________________
+read a text file, store elements into a sorted linked list [which means every time we insert an element, it inserts it into the correct location, which saves time while inserting elements into BST]. The reason we use a linked list instead of arrays is because if we have 1 million users, an array would become terribly slow and hard to manage if we remove elements or add more elements. 
+
+We store the reference of objects from linked list to BST and hash. The reason we do this is because we want to keep the object properties same across each data structure and not deep copy of the objects, saves memory and keeps the data inside the objects same everywhere. Also, for deletion, we just need to delete the actual object and it deletes it everywhere. 
+
+BST: 
+special features: it is balanced (using AVL trees upon insertion), remove (balances tree again using same AVL functions), insertion is recursive,
+
+we use BST for user login because in order to search 1 billionth user, we will just need 30 comparisons. Big O notation: O(nlogn). indented tree: which you can see visually how the BST looks. 
+
+Process on AVL trees and functions. How nodes are swapped. 
+
+Hash table: take reference,
+cool features: linked list (if collision, we add elements to the first place of the linked list and move the rest to the bottom) , 
+when we make a hash table, we get a prime number as a table size (so it decreases collisions)
+
+if loading factor of hash table is more than 75 percent, then we rehash
+rehashing, we double the size of the table, get the next prime number, set that as table size, copy all the elements to a temp array, rehash all the elements to the new hash table, and delete temp array.
+
+user statistics in hash table, 
+
+in collisions, we count the number of objects in each collision and print the highest collision chain, 
+
+destructor for each table which deletes the element, frees the memory 
+
+I/O operation: we have 3 interfaces: user, user admin, admin. 
+user: show an image of user menu, user admin, and admin and what each of them do. 
+we have different colors for each interface, warnings are in red, user profiles have a white background/blue text, clear the screen after every event, 

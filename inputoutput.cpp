@@ -65,7 +65,7 @@ public:
  
     
     void userMenu(string name, string password) {
-        
+        //prompts user for username and password. If user has correct username and password they can modify their profile.
         bool options = true;
         person *temp;  person *other; person temporary; vector<person *> tempFriends;
         
@@ -187,6 +187,7 @@ public:
     }
     
     void userAdminMenu(person &personName) {
+		//user admin allows user to change more settings on their profile such as city etc.
         person temporary;
         person *other;
         bool options = true;
@@ -278,6 +279,7 @@ public:
     
     
     void adminMenu(inputoutput &obj, string password) {
+		//admin can delete,create and search for a person. It can also print the hash table and binary tree.
         hashing hashfunc(count);
         for (int i = 0 ; i < count ; i++ ) {
             hashfunc.addObject(personArray[i]);

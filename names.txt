@@ -165,3 +165,213 @@ Male
 20
 San Diego, CA
 San Diego State University
+
+Drake Yam
+Ekard
+Male
+24
+Irvine, CA
+Irvine Valley College
+
+James Li
+Semaj
+Male 
+26
+Merced, CA
+University of California Merced
+
+Joy Yen
+Yoj
+Female
+21
+San Diego, CA
+San Diego State University
+
+Bob Warp
+bob
+Male
+24
+Davis, CA
+University of California Davis
+
+Jerry Hayes
+yrrej
+Male
+21
+Davis, CA
+University of California Davis
+
+Holly James
+ylloh
+Female
+20
+Merced, CA
+University of California Merced
+
+Austin Chuang
+Nitsua
+Male
+22
+Berkeley, CA
+University of California Berkeley
+
+Yost Ten
+tsoy
+Male
+22
+Berkeley, CA
+University of California Berkeley
+
+Molly Wharp
+yllom
+Female
+22
+Berkeley, CA
+University of California Berkeley
+
+Amy Nallur
+yma
+Female
+22
+Berkeley, CA
+University of California Berkeley
+
+Harlem Pado
+melrah
+Male
+24
+Irvine, CA
+Irvine Valley College
+
+Albert Young
+trebla
+Male
+24
+Irvine, CA
+Irvine Valley College
+
+Richard James
+drahcir
+Male
+24
+Irvine, CA
+Irvine Valley College
+
+John Smith
+nhoj
+Male
+17
+Philadelphia, PA
+Drexel Univerisity
+
+Rachel Smith
+lehcar
+Female
+17
+Philadelphia, PA
+Drexel Univerisity
+
+Florence Suye
+Ecnerolf
+Female
+20
+Ann Arbor, MI
+University of Michigan
+
+Laura Jordan
+arual
+Female
+20
+Ann Arbor, MI
+University of Michigan
+
+Luna Chong
+anul
+Female
+20
+Ann Arbor, MI
+University of Michigan
+
+Henry Yorn
+yrneh
+Male
+20
+Stony Brook, NY
+Stony Brook University
+
+Tam Gern
+mat
+Female
+22
+Stony Brook, NY
+Stony Brook University
+
+Lam Ginger
+mal
+Female
+20
+Stony Brook, NY
+Stony Brook University
+
+Jake Mires
+Ekaj
+Male
+21
+Blacksburg, VA
+Virginia Tech University 
+
+Ron Gotor
+Nor
+Male
+22
+Blacksburg, VA
+Virginia Tech University
+
+Jessica Seymour
+Acissej
+Female
+Blacksburg, VA
+Virginia Tech Universtiy
+
+Kim Heour
+Mik
+Female
+21
+Santa Clara, CA
+Santa Clara University
+
+Kane Seim
+enak
+Male
+21
+Santa Clara, CA
+Santa Clara University
+
+Deepak Nadir
+kapeed
+Male
+21
+Santa Clara, CA
+Santa Clara University
+
+Mika Suku
+akim
+Female
+21
+Costa Mesa, CA
+Orange Coast College
+
+Matt Johnson
+ttam
+Male
+21
+Costa Mesa, CA
+Orange Coast College
+
+Yosh Matar
+hsoy
+Male
+20
+Costa Mesa, CA
+Orange Coast College
+

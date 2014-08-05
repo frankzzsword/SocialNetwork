@@ -1,3 +1,9 @@
+//  person.cpp
+//  socialNetwork
+//
+//  Created by Varun Mishra on 7/10/14.
+//  Copyright (c) 2014 Varun Mishra. All rights reserved.
+//
 #include "person.h"
 #include <string>
 #include <sstream>
@@ -16,7 +22,6 @@ person::person ( ) {
     city = " ";
     college = " ";
     deactivate = false;
-    admin = false;
 };
 
 // setter constructor
@@ -28,7 +33,6 @@ person::person ( string name, string password, string gender, int age,  string c
     this->city = city;
     this->college = college;
     deactivate = false;
-    admin = false;
     relationship = NULL;
 };
 void person::setName( string name) {
@@ -53,7 +57,6 @@ void  person::setCollege( string college) {
 void  person::setRelationship(person *lover){
     //if either one breaks up
     if (lover == NULL) {
-		system("Color F2");
         if(relationship == NULL) return;
         relationship->setStatus(relationship->getName() + " is now Single");
         relationship->relationship = NULL;
@@ -88,8 +91,8 @@ void  person::deactivateAccount( bool deactivate) {
     this->deactivate = deactivate;
 }
 
-void  person::receiveMessage(person&friendName ,string message) {
-    friendName.text[this->name].push_back(message);
+void  person::receiveMessage(person &friendName , person &obj ,string message) {
+    friendName.text[obj.name].push_back(message);
 };
 
 
@@ -97,12 +100,10 @@ void  person::sendMessage(person &friendName,  string message) {
     bool found = false;
     if (&friendName == this)
     {
-		system("Color F4");
         cout << "You cannot send a message to yourself." <<  endl;
         return;
     }
     if (friends.size() == 0) {
-		system("Color F2");
         cout << "In order to send a message, you need to be friends with this person";
         return;
     }
@@ -114,10 +115,10 @@ void  person::sendMessage(person &friendName,  string message) {
         
     }
     if(found) {
-        string messageName =  getDate() + "\n" + this->name + "  " + message + "\n";
+        string messageName = getDate() + message;
         string firstName = friendName.getName();
         text[firstName].push_back(messageName);
-        friendName.receiveMessage(friendName, messageName);
+        friendName.receiveMessage(friendName, *this, messageName);
     }
     else
     {
@@ -125,25 +126,25 @@ void  person::sendMessage(person &friendName,  string message) {
     }
     };
 
+
+
+
 void  person::addFriend(person &friendName) {
     // NOTE : check if already exists or if it is the same person
     
     if (&friendName == this)
     {
-		system("Color F4");
         cout << "You cannot add yourself." <<  endl;
         return;
     }
     for (int i = 0; i < friends.size(); i++ ) {
         if (friends[i]->name == friendName.name) {
-			system("Color 04");
             cout << "You cannot add the same friend twice." <<  endl;
             return  ;
         }
     }
     friends.push_back(&friendName);
     friendName.friends.push_back(this);
-	system("Color F2");
     cout << name << " and " << friendName.name << " are now friend " <<  endl;
     setStatus(name + " and " + friendName.name + " are now friend ");
 }
@@ -153,7 +154,6 @@ void  person::deleteFriend(person &friendName) {
     
     if (&friendName == this)
     {
-		system("Color F4");
         cout << "You cannot delete yourself." <<  endl;
         return;
     }
@@ -164,7 +164,6 @@ void  person::deleteFriend(person &friendName) {
             return  ;
         }
     }
-	system("Color F2");
     cout << name << " and " << friendName.name << " are no longer friends." <<  endl;
 }
 string person::getName() const {
@@ -210,7 +209,6 @@ vector<person*>  person::getFriends() const {
 
 
 string  person::getRelationship() const {
-	system("Color F2");
     if(relationship == NULL) {
         return "Single";
     }
@@ -224,13 +222,11 @@ string  person::getRelationship() const {
 
 void  person::printFriends() const {
     if( friends.size() == 0 ) {
-		system("Color F4");
         cout << name << " has no friends." <<  endl;
     }
     else
     {
-		system("Color F2");
-        cout << "Friends of " << name <<  endl;
+        cout << "Friends of " << name <<  endl << "-------------------------------------------" << endl;
         for (int i=0; i<friends.size();i++){
             cout << friends[i]->name <<  endl;
         }
@@ -241,12 +237,10 @@ void  person::printFriends() const {
 
 void  person::printStatus() const {
     if( status.size() == 0 ) {
-		system("Color F4");
-        cout << name << " has no status dpdates." <<  endl;
+        cout << name << " has no status updates." <<  endl;
     }
     else
     {
-		system("Color F2");
         cout << "Status updates of " << name <<  endl << "----------------------------------------------" << endl;
         for (int i=0; i<status.size();i++){
             cout << status[i] <<  endl;
@@ -257,17 +251,15 @@ void  person::printStatus() const {
 
 void person:: printMessages() const {
     if( text.size() == 0 ) {
-		system("Color F4");
         cout << name << " no messages so far." <<  endl;
     }
     else
     {
-		system("Color F2");
-        cout << "Private Messages of " << name  <<  endl << "----------------------------------------------" << endl;
-        typedef map<string, vector<string>>::const_iterator MapIterator;
+        cout << "Private Messages of " << name  <<  endl << "----------------------------------------------" << endl <<endl;
+        typedef map<string, vector<string> >::const_iterator MapIterator;
         for (MapIterator iter = text.begin(); iter != text.end(); iter++)
         {
-            cout << iter->first << endl << endl;
+            cout << iter->first << endl << "---------------------" <<endl;
             typedef vector<string>::const_iterator ListIterator;
             for (ListIterator list_iter = iter->second.begin(); list_iter != iter->second.end(); list_iter++)
                 cout << " " << *list_iter << endl;
@@ -275,15 +267,28 @@ void person:: printMessages() const {
     }
 }
 
+void  person::printPerson() const {
+    
+    cout  << "Name :       " << getName()<< endl
+    <<  "Gender :     " << getGender() <<endl
+    <<  "Age :        " << getAge() <<endl
+    <<  "City :       " << getCity() << endl
+    <<  "University : "<<getCollege() << endl <<endl;
+    cout <<  getName() << " is currently "<< getRelationship() << endl <<endl;
+    printFriends();
+    cout << endl;
+    printStatus();
+}
+
+
 
 string person::getDate() {
-	system("Color F2");
     time_t theTime = time(NULL);
     struct tm *aTime = localtime(&theTime);
+    
     int day = aTime->tm_mday;
     int month = aTime->tm_mon ; // Month is 0 - 11, add 1 to get a jan-dec 1-12 concept
     int year = aTime->tm_year + 1900; // Year is # years since 1900
-	
     string months[] = {"January", "February", "March", "April",
         "May", "June", "July", "August", "September", "October",
         "November", "December"};
@@ -299,6 +304,6 @@ string person::getDate() {
         ss << year;
         YEAR = ss.str();
     }
-    string fullDate = DAY+ " " + months[month] +" " + YEAR + "\n";
+    string fullDate = "["+ DAY+ " " + months[month] +" " + YEAR + "] : ";
     return fullDate;
 }

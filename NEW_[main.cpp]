@@ -1,0 +1,70 @@
+#include <iostream>
+#include <cstdio>
+#include "person.h"
+#include "inputoutput.cpp"
+#include "BinarySearchTree.h"
+using namespace std;
+
+int main(int argc, const char * argv[]) {
+    system("Color F0");
+    //system("color %");
+    inputoutput menu;
+    menu.readFile("names.txt");
+    int input = 0;
+    while(true) {
+        int option;
+        cout << "\n*************************************************************************\n";
+        cout << "*                 Welcome to the Social Network                         *" << endl;
+        cout << "*                                                                       *" << endl;
+        cout << "*                  [1] Sign Up                                          *" << endl;
+        cout << "*                  [2] Login                                            *" << endl;
+        cout << "*                  [3] Exit                                             *" << endl;
+        cout << "*                                                                       *" << endl;
+        cout << "*     [Select Menu] : "; cin >> option;
+        cout << "\n*************************************************************************\n";
+        system("CLS");
+		
+        if(option ==1) {
+            person temporary;
+            temporary = menu.getcaseone();
+            menu.dataRecord.insert(temporary);
+            menu.tree.insert(menu.dataRecord.search(temporary));
+            cout << "Thank you for choosing our Social Network " + temporary.getName() <<endl;
+        }
+        
+        if(option == 2){
+        for(int i = 0; i < 3; i ++) {
+			     system("CLS");
+			    system("Color F0");
+            cout << "\n*************************************************************************\n";
+            cout << "*           Welcome to the Social Network                               *" << endl;
+            cout << "*                                                                       *" << endl;
+            cout << "*                                                                       *" << endl;
+            string name;
+            string password;
+            cout << "*           Username: "; cin.ignore(); getline(cin, name);
+            cout << "*                                                                       *" << endl;
+            cout << "*           Password: "; cin>>password;
+            cout << "*                                                                       *" << endl;
+            cout << "*                                                                       *" << endl;
+            cout << "*************************************************************************" << endl;
+			system("CLS");
+            if(name != "admin")
+                menu.userMenu(name, password);
+            else
+                menu.adminMenu(menu, password);
+            
+        }
+        cout << "\n Too many incorrect attempts. ";
+        }
+        
+        if (option==3) {
+            break;
+        }
+        
+    }
+    
+    system("pause");
+    return 0;
+    
+}

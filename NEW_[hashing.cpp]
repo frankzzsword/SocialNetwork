@@ -7,10 +7,12 @@ using namespace std;
 //Default constructor
 hashing::hashing(int size)
 {
+	collisions =0;
+	maxbucket =0;
     size = size *2;
     getPrime(size);
     tableSize = size;
-	numberofentries =0;
+	entries =0;
     HashTable = new item*[tableSize];
 	for(int i=0; i<tableSize; i++){
 		HashTable[i] = NULL;
@@ -20,25 +22,18 @@ hashing::hashing(int size)
 /**************************** Hash ***************************************/
 int hashing::Hash(string key)
 {
-    int hash = 0;
     int index;
     
-    index = (int)key.length();
+    string keyTemp = key;
+    const char *p = keyTemp.c_str();
+    unsigned h = 2166136261;
+    long length = strlen( p );
     
-    for(int i = 0; i < key.length(); i++ )
-    {
-        hash = hash + (int)key[i];
+    for (int i = 0; i < length; i++ )
+    {  h = (h * 16777619) ^  p[i];
         
     }
-    
-    index = hash % tableSize;
-	// DEBUG
-	/*cout << endl;
-     cout << "[tableSize] : " << tableSize << endl;
-     cout << "[hash] : " << hash << endl;
-     cout << "[NAME] : " << key << endl;
-     cout << "[INDEX] : " << index << endl;*/
-    
+    index = h % tableSize;
     return index;
     
 }
@@ -46,10 +41,9 @@ int hashing::Hash(string key)
 /**************************** addObject **********************************/
 void hashing::addObject(person &personObj)
 {
-	system("Color F2");
+
     int tempCollision = 0;
     int index = Hash(personObj.getName());
-    
 	cout << personObj.getName() << ": [" << index << "]\n" ;
     
     if(HashTable[index] == NULL)
@@ -68,17 +62,20 @@ void hashing::addObject(person &personObj)
 		HashTable[index]->hashedPerson = &personObj;
 		HashTable[index]->next = Ptr;
 		cout << personObj.getName() << " is added!" << endl;
-        numberofcollisions++;
+		
+        collisions = collisions +1;
 	}
-    
-    numberofentries++;
-
-    
-	//cout << "People in this index[" << Hash(personObj.getName()) << "] :" << hashing::NumberOfItemsInIndex(Hash(personObj.getName())) << endl;
-    
-    if(getLoadingfactor() > 0.75) {
-        reHash();
+    //Checking the count of highest collisions
+    entries++;
+    item* Ptr = HashTable[index];
+    while(Ptr != 0)
+    {
+        tempCollision++;
+        Ptr = Ptr->next;
     }
+    if(maxbucket < tempCollision ) maxbucket = tempCollision;
+    if(getLoadingfactor() > 0.60) reHash();
+    
 
 }
 
@@ -101,6 +98,10 @@ int hashing::NumberOfItemsInIndex(int index)
             Ptr = Ptr->next;
         }
     }
+	if(maxbucket < count )
+	{
+		maxbucket = count;
+	}
     return count;
 }
 
@@ -108,7 +109,7 @@ int hashing::NumberOfItemsInIndex(int index)
 //Print information in hash table
 void hashing::PrintTable()
 {
-    system("Color F0");
+
     cout << "*****************************PRINTING HASH TABLE*************************" << endl;
     int number = 0;
     for(int i = 0; i < tableSize; i++)
@@ -120,7 +121,7 @@ void hashing::PrintTable()
             cout << "Index = " << i <<endl;
             cout << "There are " << number << " people in this bucket.\n";
             item* Ptr = HashTable[i];
-
+			
             while( Ptr != NULL)
             {
                 cout << *Ptr->hashedPerson << endl;
@@ -131,52 +132,71 @@ void hashing::PrintTable()
         
         
     }
-    cout << "The largest collision chain is " << largestbucket << endl;
-    cout << "Number of collisions = " << numberofcollisions <<endl;
-    cout << "Number of elements = " << numberofentries << endl;
-    cout << "Loading factor = " << getLoadingfactor() << endl;
+ }
+
+
+/************************ Search *****************************/
+//searches information in hash table
+person& hashing::search(person &personObj)
+{
+    int index = Hash(personObj.getName());
+    if (HashTable[index] == NULL) return personObj;
+    if(*HashTable[index]->hashedPerson == personObj)
+    return *HashTable[index]->hashedPerson;
+    else {
+    item* Ptr = HashTable[index];
+    while( Ptr != NULL)
+    {
+        if ( personObj == *Ptr->hashedPerson) break;
+        Ptr = Ptr->next;
+    }
+    if(Ptr == NULL) return personObj;
+    return *Ptr->hashedPerson;
+    }
 }
+
 
 /************************** removeObject ****************************/
 // remove the object from hash table
 void hashing::removeObject(person &personObj)
 {
-	system("Color F4");
+
     int index = Hash(personObj.getName());
+  
     
     item* delPtr;
     item* p1;
     item* p2;
+    
     //case 0: bucket is empty
     if(HashTable[index] == NULL)
         cout << "Person not found in the hash table!\n";
     
     //case 1: only 1 item contained in bucket and that item has matching name
-    else if( HashTable[index]->hashedPerson == &personObj && HashTable[index]->next == 0)
+    else if( *HashTable[index]->hashedPerson == personObj && HashTable[index]->next == 0)
     {
         HashTable[index] = NULL;
-        cout << personObj.getName() << " item not found!\n";
+        cout << personObj.getName() << " is removed from the hash table!\n";
     }
     
     
     //case 2: match is located in the first item in the bucket but there are more items in the bucket
-    else if(HashTable[index]->hashedPerson == &personObj)
+    else if(*HashTable[index]->hashedPerson == personObj)
     {
         delPtr = HashTable[index];
         HashTable[index] = HashTable[index]->next;
         delete delPtr;
         delPtr = 0;
         cout << personObj.getName() << " is removed from the hash table!\n";
-        numberofentries--;
+        entries--;
     }
     //case 3: bucket contains items but first item is not a match
     else
     {
-		system("Color F4");
+     
         p1 = HashTable[index]->next;
         p2 = HashTable[index];
-        
-        while(p1 != 0 && p1->hashedPerson != &personObj)
+        while(p1 != 0 && *p1->hashedPerson != personObj)
         {
             p2 = p1;
             p1 = p1->next;
@@ -195,7 +215,7 @@ void hashing::removeObject(person &personObj)
             delete delPtr;
             delPtr = 0;
             cout << personObj.getName() << " is removed from the hash table!\n";
-            numberofentries--;
+            entries--;
         }
     }
 }
@@ -220,12 +240,11 @@ void hashing::getPrime(int &num) {
 /**************************ReHash**************************/
 
 void hashing::reHash() {
-	system("Color F2");
     int newSize = tableSize * 2;
     getPrime(newSize);
     cout << "Old Table Size = " << tableSize << endl;
     cout << "New Table Size = " << newSize << endl;
-
+    
     item* newArr = new item[newSize];
     int count = 0;
     for(int i = 0; i < tableSize; i++)
@@ -246,21 +265,34 @@ void hashing::reHash() {
     delete [] HashTable;
     tableSize = newSize;
     HashTable = new item*[tableSize];
-    numberofentries = 0;
+    entries = 0;
+    collisions =0;
+    maxbucket =0;
     for(int i=0; i<tableSize; i++){
 		HashTable[i] = NULL;
 	}
-
-
+    
+    
     
     for(int i = 0; i < count; i++)
     {
-		system("Color F2");
+  
         cout <<"Adding to new  Hashed Array" << endl;
         cout << *newArr[i].hashedPerson;
         addObject(*newArr[i].hashedPerson);
         
     }
     
+    
     delete[] newArr;
 }
+
+
+/**************************Get Statistics**************************/
+void hashing::statistics() {
+    cout << "Hash Table Usage Statistics " << endl;
+    cout << "The largest collision chain is " << maxbucket << endl;
+    cout << "Number of collisions = " << getNumberofcollisions() <<endl;
+    cout << "Number of elements = " << entries << endl;
+    cout << "Loading factor = " << getLoadingfactor() << endl;
+    }

@@ -25,7 +25,7 @@ class BinarySearchTree
     void remove(itemType &data); //removes an item from the BST
     void _remove(node*p ,itemType &data); //removes an item from the BST
     int getBalance(node* N);// gets the Balance of the tree
-    void delete(node*); //destroys BST
+    void delete_BST(node*); //destroys BST
     void inOrder(node*); //calculates the in-order traversal
     void print_inOrder(); //prints the in-order traversal
     void printIndent();

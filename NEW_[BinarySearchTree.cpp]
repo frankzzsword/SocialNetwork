@@ -193,11 +193,11 @@ int BinarySearchTree<itemType>::getBalance(node* N){
 
 //destroy BST
 template <class itemType> 
-void BinarySearchTree<itemType>::destroy_tree(node *root){
+void BinarySearchTree<itemType>::delete(node *root){
     if(root!=NULL)
     {
-        delete_tree(root->left);
-        delete_tree(root->right);
+        delete(root->left);
+        delete(root->right);
         delete(root);
         if(root->left!=NULL)
             root->left=NULL;

@@ -191,6 +191,22 @@ int BinarySearchTree<itemType>::getBalance(node* N){
     return Height(N->left) - Height(N->right);
 }
 
+//destroy BST
+template <class itemType> 
+void BinarySearchTree<itemType>::destroy_tree(node *root){
+    if(root!=NULL)
+    {
+        delete_tree(root->left);
+        delete_tree(root->right);
+        delete(root);
+        if(root->left!=NULL)
+            root->left=NULL;
+        if(root->right!=NULL)
+            root->right=NULL;
+        root=NULL;
+    }
+}
+
 template <class itemType>
 void BinarySearchTree<itemType>::print_inOrder()
 {

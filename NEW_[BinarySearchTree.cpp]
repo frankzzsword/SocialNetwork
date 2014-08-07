@@ -199,11 +199,14 @@ void BinarySearchTree<itemType>::delete_BST(node *root){
         delete_BST(root->left);
         delete_BST(root->right);
         delete(root);
-        if(root->left!=NULL)
-            root->left=NULL;
-        if(root->right!=NULL)
-            root->right=NULL;
-        root=NULL;
+        
+        if (root->left != NULL)
+            root->left = NULL;
+            
+        if (root->right!= NULL)
+            root->right = NULL;
+            
+        root = NULL;
     }
 }
 
